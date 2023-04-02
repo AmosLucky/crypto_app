@@ -36,10 +36,19 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  http: ^0.13.5
+  provider:
+  rflutter_alert:
+  flutter_launcher_icons:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/logo.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -58,6 +67,20 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
+  assets:
+    - assets/images/
+  #   - images/a_dot_ham.jpeg
+  fonts:
+       - family: Raleway
+         fonts:
+           - asset: assets/fonts/raleway.ttf
+       - family: Roboto
+         fonts:
+           - asset: assets/fonts/roboto.ttf 
+       - family: Lato
+         fonts:
+           - asset: assets/fonts/lato.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
