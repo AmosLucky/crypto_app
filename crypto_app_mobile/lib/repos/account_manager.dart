@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import '../models/usermodel.dart';
-import '../screens/home_screen.dart';
+import '../screens/dashboard_screen.dart';
 import 'navigator_service.dart';
 
 import '../constants/currentuser.dart';
@@ -23,13 +23,14 @@ class AccountManager extends ChangeNotifier {
   String get msg => _msg;
   bool _hasAdminAccess = false;
   bool get hasAdminAccess => _hasAdminAccess;
-
-  void toggelAdmin(bool isAdmin) {
-    _hasAdminAccess = isAdmin;
+  AccountManager() {
+    _loginMsg = "";
+    _msg = "";
     notifyListeners();
   }
 
-  AccountManager() {
+  void toggelAdmin(bool isAdmin) {
+    _hasAdminAccess = isAdmin;
     notifyListeners();
   }
 
@@ -83,7 +84,7 @@ class AccountManager extends ChangeNotifier {
         UserModel userModel = UserModel(
             id: "1",
             name: "Lucky",
-            fullname: "Mark Lucky",
+            username: "Mark Lucky",
             email: "mark@gmail.com",
             access: "user",
             token: "123456",
@@ -92,7 +93,7 @@ class AccountManager extends ChangeNotifier {
             coins: coins);
         //   currentUser = userModel;
 
-        NavigationService().navigateToScreen(HomeScreen(
+        NavigationService().replaceScreen(DashboardScreen(
           userModel: userModel,
         ));
         // }
@@ -118,29 +119,45 @@ class AccountManager extends ChangeNotifier {
     //return isSuccessful;
   }
 
-  Future<bool> channelCreateUser({required Map userData}) async {
-    userData['mobile'] = userData['phone'];
+  channelCreateUser({required Map<String, dynamic> userData}) async {
+    _isLoding = true;
+    notifyListeners();
 
     try {
       print(userData);
-      _isLoding = true;
-      notifyListeners();
 
       Response response = await http.post(Uri.parse(createAccountUrl),
           body: jsonEncode(userData),
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer ' + currentUser!.token!.toString(),
+            'Authorization': 'Bearer ' "",
           });
       _isLoding = false;
       dynamic result = jsonDecode(response.body);
 
-      if (response.statusCode == 200) {
-        _msg = result["message"];
+      if (response.statusCode == 201) {
+        _msg = "success";
+        //result["message"];
+        Map<String, dynamic> extra = {
+          "access": "user",
+          "token": "123456",
+          "status": "active",
+          "balance": "90000",
+          "coins": coins
+        };
+
+        UserModel userModel = UserModel.fromJson(userData..addAll(extra));
+
+        //   currentUser = userModel;
+
+        NavigationService().replaceScreen(DashboardScreen(
+          userModel: userModel,
+        ));
+
         return true;
       } else {
-        _msg = result["message"];
+        _msg = "success";
       }
 
       notifyListeners();

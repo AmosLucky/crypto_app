@@ -1,9 +1,11 @@
 import 'package:crypto_app_mobile/constants/strings.dart';
+import 'package:crypto_app_mobile/repos/general.dart';
 import 'package:crypto_app_mobile/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'repos/account_manager.dart';
+import 'repos/navigator_service.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +20,10 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AccountManager()),
+        ChangeNotifierProvider(create: (_) => GeneralRepo()),
       ],
       child: MaterialApp(
+        navigatorKey: NavigationService().navigationKey,
         title: appName,
         theme: ThemeData(
           fontFamily: "raleway",

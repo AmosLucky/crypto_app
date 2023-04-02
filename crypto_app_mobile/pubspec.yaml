@@ -40,6 +40,7 @@ dependencies:
   provider:
   rflutter_alert:
   flutter_launcher_icons:
+  curved_navigation_bar:
 
 dev_dependencies:
   flutter_test:

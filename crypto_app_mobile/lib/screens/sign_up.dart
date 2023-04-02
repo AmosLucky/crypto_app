@@ -32,7 +32,8 @@ class _SignInState extends State<SignUp> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // AccountManager accountManager = context.watch<AccountManager>();
+    AccountManager accountManager = context.watch<AccountManager>();
+
     return WillPopScope(
       onWillPop: () async {
         return false;
@@ -139,22 +140,26 @@ class _SignInState extends State<SignUp> {
                               height: 0,
                             ),
                             Container(
-                              margin: EdgeInsets.only(bottom: 10),
+                              margin: EdgeInsets.symmetric(vertical: 10),
                               child: Visibility(
-                                visible: accountManager.loginMsg.length > 2,
-                                child: Text(accountManager.loginMsg),
+                                visible: accountManager.msg.length > 2,
+                                child: Text(accountManager.msg),
                               ),
                             ),
                             Container(
-                                margin: EdgeInsets.only(bottom: 10),
+                                margin: EdgeInsets.only(bottom: 5),
                                 child: Visibility(
                                     visible: accountManager.isLoding,
                                     child: CupertinoActivityIndicator())),
                             Button1(
                               onPressed: () async {
                                 if (_formKey.currentState!.validate()) {
-                                  // accountManager.login(
-                                  //     emailCRT.text.trim(), passwordCRT.text.trim());
+                                  accountManager.channelCreateUser(userData: {
+                                    "email": emailCRT.text.trim(),
+                                    "password": passwordCRT.text.trim(),
+                                    "name": nameCRT.text.trim(),
+                                    "username": usernameCRT.text.trim()
+                                  });
                                 }
                                 //GeneralRepo().navigateToScreen(context, HomeScreen());
                               },

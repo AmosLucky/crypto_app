@@ -10,7 +10,7 @@ String usersToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
   dynamic name;
-  dynamic fullname;
+  dynamic username;
   dynamic email;
   dynamic access;
   dynamic status;
@@ -23,7 +23,7 @@ class UserModel {
   List<Map> coins = [];
   UserModel(
       {this.name,
-      this.fullname,
+      this.username,
       this.email,
       this.access,
       this.updatedAt,
@@ -48,12 +48,12 @@ class UserModel {
   //     phone: "");
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        fullname: json["username"] ?? "",
+        username: json["username"] ?? "",
         access: json["access"] ?? "",
         token: json["token"] ?? "",
         email: json["email"] ?? "",
         name: json["name"] ?? "",
-        balance: json['wallet']["balance"],
+        balance: json["balance"] ?? "",
         updatedAt: (json["updated_at"] ?? ""),
         createdAt: (json["created_at"] ?? ""),
         id: json["id"] ?? "",
@@ -64,7 +64,7 @@ class UserModel {
 
   Map<String, dynamic> toJson() => {
         "name": name,
-        "fullname": fullname,
+        "username": username,
         "email": email,
         "access": access,
         "updated_at": updatedAt,

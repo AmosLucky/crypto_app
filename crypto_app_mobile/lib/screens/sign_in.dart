@@ -24,6 +24,13 @@ class _SignInState extends State<SignIn> {
   AccountManager accountManager = AccountManager();
   var emailCRT = new TextEditingController();
   var passwordCRT = new TextEditingController();
+  @override
+  void initState() {
+    emailCRT.text = "mark@gmail.com";
+    passwordCRT.text = "123456";
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
