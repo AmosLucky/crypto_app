@@ -15,6 +15,7 @@ import 'package:provider/provider.dart';
 import '../repos/general.dart';
 import '../widget/app_title.dart';
 import '../widget/circular_action.dart';
+import '../widget/coins_search_dialog.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,19 +80,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         CircularAction(
                           iconData: Icons.arrow_upward,
                           text: "Send",
-                          onTap: () {},
+                          onTap: () {
+                            showCoins(context, "send");
+                          },
                         ),
                         CircularAction(
                           iconData: Icons.arrow_downward,
                           text: "Recieve",
                           onTap: () {
-                           
+                            showCoins(context, "receive");
                           },
                         ),
                         CircularAction(
                           iconData: Icons.balance,
                           text: "Coins",
-                          onTap: () {},
+                          onTap: () {
+                            showCoins(context, "receive");
+                          },
                         )
                       ],
                     )

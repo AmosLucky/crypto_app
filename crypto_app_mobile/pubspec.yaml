@@ -41,6 +41,7 @@ dependencies:
   rflutter_alert:
   flutter_launcher_icons:
   curved_navigation_bar:
+  modal_bottom_sheet: ^2.1.2
 
 dev_dependencies:
   flutter_test:
