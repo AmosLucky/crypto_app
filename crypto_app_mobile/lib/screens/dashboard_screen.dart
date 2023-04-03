@@ -41,9 +41,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         bottomNavigationBar: CurvedNavigationBar(
           backgroundColor: Colors.black.withOpacity(0.2),
           items: <Widget>[
-            Icon(Icons.home, size: 30),
-            Icon(Icons.list, size: 30),
-            Icon(Icons.person, size: 30),
+            icon(Icons.home),
+            icon(Icons.list),
+            icon(Icons.person),
           ],
           onTap: (index) {
             //Handle button tap
@@ -51,6 +51,14 @@ class _DashboardScreenState extends State<DashboardScreen> {
           },
         ),
       ),
+    );
+  }
+
+  Widget icon(icondata) {
+    return Icon(
+      icondata,
+      size: 30,
+      color: deepIndego,
     );
   }
 }

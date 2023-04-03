@@ -20,7 +20,7 @@ class UserModel {
   dynamic token;
   dynamic phone;
   dynamic balance;
-  List<Map> coins = [];
+  List<Map<String, dynamic>> coins = [];
   UserModel(
       {this.name,
       this.username,

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import '../models/usermodel.dart';
+import '../models/usermodel.dart';
 import '../screens/dashboard_screen.dart';
 import 'navigator_service.dart';
 
@@ -23,6 +24,9 @@ class AccountManager extends ChangeNotifier {
   String get msg => _msg;
   bool _hasAdminAccess = false;
   bool get hasAdminAccess => _hasAdminAccess;
+
+  UserModel? _userModel;
+  UserModel get userModel => _userModel!;
   AccountManager() {
     _loginMsg = "";
     _msg = "";
@@ -91,7 +95,9 @@ class AccountManager extends ChangeNotifier {
             status: "active",
             balance: "balanace",
             coins: coins);
-        //   currentUser = userModel;
+        currentUser = userModel;
+        _userModel = userModel;
+        notifyListeners();
 
         NavigationService().replaceScreen(DashboardScreen(
           userModel: userModel,
@@ -149,7 +155,9 @@ class AccountManager extends ChangeNotifier {
 
         UserModel userModel = UserModel.fromJson(userData..addAll(extra));
 
-        //   currentUser = userModel;
+        currentUser = userModel;
+        _userModel = userModel;
+        notifyListeners();
 
         NavigationService().replaceScreen(DashboardScreen(
           userModel: userModel,
