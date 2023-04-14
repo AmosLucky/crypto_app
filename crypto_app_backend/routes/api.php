@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+
+
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/transactions', [App\Http\Controllers\TransactionController::class, 'show'])->name('show_transactions');
+Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'view'])->name('view');
+

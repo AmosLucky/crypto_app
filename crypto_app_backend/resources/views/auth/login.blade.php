@@ -1,7 +1,79 @@
-@extends('layouts.app')
+@include('layouts.header')
+
+
+<section class="sign-in">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="sign-in__top center">
+                        <a href="/">
+                            <img id="site-logo" src="assets/images/logo/logo-main.png"
+                            alt="Monteno" width="165" height="40"
+                            data-retina="assets/images/logo/logo-main@x2.png" data-width="165"
+                            data-height="40">
+                        </a>
+                    </div>
+                    <div class="sign-in__main">
+                        <div class="top center">
+                            <h3 class="title">Sign in</h3>
+                            <p class="fs-17">With your Account</p>
+                        </div>
+
+                        <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                            <div class="form-group">
+                              <label >email address <span>*</span> </label>
+                              <input type="email" name="email" class="form-control @error('email') is-invalid @enderror"  id="exampleInputEmail1" placeholder="example@gmail.com">
+                              @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                             
+                            </div>
+                            <div class="form-group">
+                              <label for="exampleInputPassword1">Password<span>*</span></label>
+                              <input type="password" name="password" class="form-control @error('password') is-invalid @enderror" id="exampleInputPassword1" placeholder="Password">
+                              @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-check">
+                                <div class="left">
+                                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                    <label class="form-check-label" for="exampleCheck1">Remember me</label>
+                                </div>
+                                <p>Forgot Your Password?</p>
+                            </div>
+                            <button type="submit" class="btn-action style-1"><span>Sign In</span> </button>
+                        </form>
+
+                        <div class="bottom center">
+                            <a href="/register">
+                            <p class="with">Or Sign up</p>
+                            </a>
+                           
+                        </div>
+
+                        
+                    </div>
+
+                    <p class="bottom">Dont have an account? <a href="sign-up.html">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    @include('layouts.footer')
+
+
+
+<!-- @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container d-none">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -70,4 +142,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection -->
