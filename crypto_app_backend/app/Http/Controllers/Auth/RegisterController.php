@@ -110,6 +110,7 @@ class RegisterController extends Controller
         }
 
 
+
     $user =  User::create([
         'username' => $request['name'],
         'name' => $request['name'],
@@ -126,6 +127,8 @@ class RegisterController extends Controller
             "coin_id"=> $coin->id,
             'balance'=>0
         ]);
+        $coin->image = asset('storage/images/'.$coin->image);
+        $coin->qr_code = asset('storage/images/'.$coin->qr_code);
     }
     $user['coins'] = $coins;
 
