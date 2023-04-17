@@ -88,6 +88,9 @@
                                 {{$coin->name}}
                                 </td>
                                 <td>
+                                    <img src="{{ asset('storage/images/'.$coin->image) }}" height="100" />
+                                    <br>
+                                    {{$coin->address}}
                                <!-- <a href="coin/delete/{{$coin->id}}">
                                <button class="btn btn-danger">
                                     Delete

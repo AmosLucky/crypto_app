@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Transaction;
-use Request;
+//use Request;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Coin;
 use App\Models\Balance;
@@ -80,14 +81,14 @@ class TransactionController extends Controller
         //
         
 
-        if (Request::is('api/*')) {
+        // if (Request::is('api/*')) {
             
-            return response( $transactions, 200)
-                  ->header('Content-Type', 'text/plain');
-        } else {
+        //     return response( $transactions, 200)
+        //           ->header('Content-Type', 'text/plain');
+        // } else {
             
             return view('dashboard.transactions', compact("transactions"));
-        }
+        //}
 
 
     }
@@ -277,6 +278,63 @@ class TransactionController extends Controller
 
         return view('dashboard.transactions', compact("transactions"));
 
+
+
+    }
+
+    public function getUserTransaction(Request $request){
+        if($request->coin_id != null){
+            $transactions = Transaction::where("user_id",$request->user_id)->where("coin_id",$request->coin_id )->get();
+                
+        }else{
+            $transactions = Transaction::where("user_id",$request->user_id)->get();
+        }
+        
+        try{
+            
+        return response()->json( ['status'=>true,"data"=>$transactions], 200) ;
+        } catch(Exception $e){
+            return response()->json( ['status'=>false,"data"=>$transactions], 200) ;
+        }
+
+
+    }
+
+
+    public function sendCoin(Request $request)
+    {
+        //
+        try{
+        $coin =  Coin::find($request['coin_id']);
+        $user =  User::find($request['user_id']);
+        $request['name'] = $coin->name;
+        $request['symbol'] = $coin->symbol;
+        $request['username'] = $user->username;
+        if (!property_exists($request, "address")){
+            $request['address'] =  $coin->address;
+
+        }
+        if (!property_exists($request, "status")){
+            $request['status'] = "pending";
+
+        } 
+        
+        
+        $this->addBalanceToUser($request);
+
+       $transaction = Transaction::create($request->all());
+
+        
+
+        $msg = "Successfuly saved";
+
+        return response()->json( ['status'=>true,"data"=>$transaction], 200);
+
+    }catch(Exception $e){
+        return response()->json( ['status'=>false,"data"=>""], 200);
+
+
+    }
 
 
     }

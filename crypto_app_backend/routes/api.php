@@ -22,5 +22,24 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/transactions', [App\Http\Controllers\TransactionController::class, 'show'])->name('show_transactions');
-Route::get('/user/{id}', [App\Http\Controllers\UserController::class, 'view'])->name('view');
+
+Route::post('/register', [App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register2');
+Route::post('/login', [App\Http\Controllers\Auth\LoginController::class, 'signin'])->name('login2');
+Route::post('/get_user_by_id', [App\Http\Controllers\UserController::class, 'getById'])->name('get_user_by_id');
+Route::post('/get_user_transactions', [App\Http\Controllers\TransactionController::class, 'getUserTransaction'])->name('getUserTransaction');
+Route::post('/update_user', [App\Http\Controllers\UserController::class, 'updateUserApi'])->name('updateUserApi');
+Route::post('/update_user_password', [App\Http\Controllers\UserController::class, 'updateUserPassword'])->name('updateUserPassword');
+
+Route::post('/send_coin', [App\Http\Controllers\TransactionController::class, 'sendCoin'])->name('sendCoin');
+
+
+
+
+
+
+
+
+
+
+
 

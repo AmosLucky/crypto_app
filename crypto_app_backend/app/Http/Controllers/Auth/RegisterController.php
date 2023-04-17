@@ -9,7 +9,8 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Coin;
-    use App\Models\Balance;
+use App\Models\Balance;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -90,4 +91,50 @@ class RegisterController extends Controller
 
         return $user;
     }
+
+   public function register(Request $request){
+
+    $validator =  Validator::make($request->all(),[
+        'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:6' ],
+        ]);
+    
+        if($validator->fails()){
+            return response()->json([
+                "status" => false,
+                "message" => $validator->errors()->first(),
+                "errors" => $validator->errors(),
+            ], 200);
+        }
+
+
+    $user =  User::create([
+        'username' => $request['name'],
+        'name' => $request['name'],
+        'email' => $request['email'],
+        'password' => Hash::make($request['password']),
+    ]);
+
+    $user = User::find($user->id);
+
+    $coins =  Coin::all();
+    foreach($coins as $coin){
+        $balance = Balance::create([
+            "user_id"=>$user->id,
+            "coin_id"=> $coin->id,
+            'balance'=>0
+        ]);
+    }
+    $user['coins'] = $coins;
+
+
+    return response()->json( ['status'=>true,"data"=>$user], 200) ;
+
+    }
+
+    
+
+    
 }

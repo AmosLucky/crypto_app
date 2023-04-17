@@ -96,6 +96,7 @@ use \App\Http\Controllers\BalanceController;
                             <div class="form-group row">
                                         <label class="col-md-2 col-form-label" for="example-email">{{$balance->name}}</label>
                                         <div class="col-md-6">
+                                            
                                             <input type="number" value="{{$balance->balance}}" name="balance" class="form-control" placeholder="Email">
                                         </div>
                                         <div class="col-md-2">

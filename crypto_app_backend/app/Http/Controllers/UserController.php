@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use App\Models\Coin;
 use App\Models\User;
 use App\Models\Transaction;
+use App\Models\Balance;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
+
 
 class UserController extends Controller
 {
@@ -79,6 +83,148 @@ class UserController extends Controller
 
 
     }
+
+    public function getById(Request $request){
+        $user =  User::find($request->id);
+        $coins = Coin::all();
+        $totalBalance = 0;
+        
+        for($i = 0; $i < count($coins); $i++){
+            $coins[$i]->image = asset('storage/images/'.$coins[$i]->image);
+            $coins[$i]->qr_code = asset('storage/images/'.$coins[$i]->qr_code);
+            $balance = Balance::where("user_id",$user->id)->where("coin_id",$coins[$i]->id)->first();
+            if($balance != null){
+                $coins[$i]->balance = $balance['balance'];
+                $totalBalance+=$balance['balance'];
+                
+            }else{
+                Balance::create([
+                    'user_id'=>$user->id,
+                    'coin_id'=>$coins[$i]->id,
+                    'balance'=>0
+                ]);
+
+                $coins[$i]->balance = 0;
+
+            }
+
+
+
+        }
+
+        $user['coins'] = $coins;
+        $user->balance = $totalBalance;
+
+
+        return response()->json( ['status'=>true,"data"=>$user], 200) ;
+
+    }
+
+
+
+    public function updateUserApi(Request $request){
+        $validator =  Validator::make($request->all(),[
+            'name' => ['required', 'string', 'max:255'],
+                'username' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'email', 'max:255'],
+                'user_id' => ['required' ],
+            ]);
+        
+            if($validator->fails()){
+                return response()->json([
+                    "status" => false,
+                    "message" => $validator->errors()->first(),
+                    "errors" => $validator->errors(),
+                ], 200);
+            }
+
+            $emailCount = User::where("email",$request['email'])->get();
+
+            if(count($emailCount) == 1){}
+
+
+            
+
+
+        $user = User::find($request['user_id']);
+
+        if($user == null){
+            return response()->json([
+                "status" => false,
+                "message" => "user not found",
+                "errors" => $validator->errors(),
+            ], 200);
+        }
+        $user->name = $request['name'];
+        $user->username = $request['username'];
+        $user->email = $request['email'];
+        // $user->balance = $request['balance'];
+        // $user->access = $request['access'];
+
+        $user->update();
+
+        $msg = "Successfuly updated";
+
+        return response()->json( ['status'=>true,"data"=>$user], 200) ;
+        
+
+    }
+
+
+    public function updateUserPassword(Request $request){
+        $validator =  Validator::make($request->all(),[
+                'old_password' => ['required', 'string'],
+                'new_password' => ['required', 'string' ],
+                'user_id' => ['required'],
+               
+            ]);
+
+
+        
+            if($validator->fails()){
+                return response()->json([
+                    "status" => false,
+                    "message" => $validator->errors()->first(),
+                    "errors" => $validator->errors(),
+                ], 200);
+            }
+
+           
+
+
+        $user = User::find($request['user_id']);
+        if($user == null){
+            return response()->json([
+                "status" => false,
+                "message" => "user not found",
+                "errors" => $validator->errors(),
+            ], 200);
+        }
+        if(!Hash::check($request['old_password'],$user->password)){
+            return response()->json([
+                "status" => false,
+                "message" => "Incorrect password",
+                "errors" => $validator->errors(),
+            ], 200);
+
+        }
+        $user->password = Hash::make($request->new_password);
+       
+        // $user->balance = $request['balance'];
+        // $user->access = $request['access'];
+
+        $user->update();
+
+        $msg = "Successfuly updated";
+
+        return response()->json( ['status'=>true,"data"=>$user], 200) ;
+        
+
+    }
+
+
+
+    
 
     
 }
