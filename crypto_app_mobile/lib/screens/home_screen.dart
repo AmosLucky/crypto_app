@@ -13,6 +13,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
 import '../repos/general.dart';
+import '../repos/utils.dart';
 import '../widget/app_title.dart';
 import '../widget/circular_action.dart';
 import '../widget/coins_search_dialog.dart';
@@ -26,8 +27,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
+  void initState() {
+    // AccountManager().refreshUser(currentUser!.id);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     AccountManager accountManager = context.watch<AccountManager>();
+    // accountManager.refreshUser(accountManager.userModel.id);
     return Scaffold(
         backgroundColor: Colors.indigo.shade900,
         appBar: AppBar(
@@ -70,7 +79,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 10,
                     ),
                     BoldText(
-                        textColor: whiteColor, fontSize: 30, text: "\$9000"),
+                        textColor: whiteColor,
+                        fontSize: 30,
+                        text: makeCurrency(accountManager.userModel.balance)),
                     SizedBox(
                       height: 10,
                     ),
@@ -117,22 +128,27 @@ class _HomeScreenState extends State<HomeScreen> {
                     topRight: Radius.circular(50)),
               ),
 
-              child: ListView.builder(
-                  itemCount: currentUser!.coins.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        var route = MaterialPageRoute(
-                            builder: (BuildContext) => CoinDetails(
-                                coinModel: CoinModel.fromJson(
-                                    accountManager.userModel.coins[index])));
-                        Navigator.push(context, route);
-                      },
-                      child: SingleCoin(
-                          coinModel: CoinModel.fromJson(
-                              accountManager.userModel.coins[index])),
-                    );
-                  }),
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  accountManager.refreshUser(accountManager.userModel.id);
+                },
+                child: ListView.builder(
+                    itemCount: currentUser!.coins.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          var route = MaterialPageRoute(
+                              builder: (BuildContext) => CoinDetails(
+                                  coinModel: CoinModel.fromJson(
+                                      accountManager.userModel.coins[index])));
+                          Navigator.push(context, route);
+                        },
+                        child: SingleCoin(
+                            coinModel: CoinModel.fromJson(
+                                accountManager.userModel.coins[index])),
+                      );
+                    }),
+              ),
             )
           ],
         ));

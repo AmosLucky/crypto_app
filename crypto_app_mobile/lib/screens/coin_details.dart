@@ -1,13 +1,16 @@
 import 'package:crypto_app_mobile/constants/colors.dart';
 import 'package:crypto_app_mobile/models/coin_model.dart';
 import 'package:crypto_app_mobile/models/transaction_model.dart';
+import 'package:crypto_app_mobile/repos/utils.dart';
 import 'package:crypto_app_mobile/screens/send_screen.dart';
 import 'package:crypto_app_mobile/widget/app_title.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../repos/account_manager.dart';
 import '../repos/general.dart';
 import '../repos/transaction_repo.dart';
 import '../widget/circular_action.dart';
@@ -26,6 +29,8 @@ class _CoinDetailsState extends State<CoinDetails> {
   @override
   Widget build(BuildContext context) {
     TransactionRepo transactionRepo = context.watch<TransactionRepo>();
+    AccountManager accountManager = context.watch<AccountManager>();
+
     return Scaffold(
       appBar: AppBar(
         elevation: 1,
@@ -40,17 +45,20 @@ class _CoinDetailsState extends State<CoinDetails> {
             color: lightIndego,
             child: Column(children: [
               Container(
-                child: Image.network(
-                  widget.coinModel.image,
-                  height: 100,
-                ),
-              ),
+                  // Image.network(
+                  //   widget.coinModel.image,
+                  //   height: 100,
+                  // ),
+                  child: CircleAvatar(
+                radius: 35,
+                backgroundImage: NetworkImage(widget.coinModel.image),
+              )),
               SizedBox(
                 height: 10,
               ),
               Container(
                 child: BoldText(
-                  text: "\$" + widget.coinModel.balance.toString(),
+                  text: makeCurrency(widget.coinModel.balance),
                   textColor: whiteColor,
                   fontSize: 25,
                 ),
@@ -86,7 +94,14 @@ class _CoinDetailsState extends State<CoinDetails> {
                   CircularAction(
                     iconData: Icons.copy,
                     text: "Copy",
-                    onTap: () {},
+                    onTap: () async {
+                      print(widget.coinModel.address);
+                      await copyString(widget.coinModel.address);
+                      // await Clipboard.setData(
+                      //     ClipboardData(text: widget.coinModel.address));
+                      showSnackBar(
+                          context, "Copied: " + widget.coinModel.address);
+                    },
                   )
                 ],
               )
@@ -94,7 +109,8 @@ class _CoinDetailsState extends State<CoinDetails> {
           ),
           Container(
             child: FutureBuilder(
-              future: transactionRepo.getUserTransactions(widget.coinModel.id),
+              future: transactionRepo.getUserTransactions(
+                  accountManager.userModel.id, widget.coinModel.id),
               builder: ((context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
@@ -103,7 +119,7 @@ class _CoinDetailsState extends State<CoinDetails> {
                 }
                 if (snapshot.hasError) {
                   return Center(
-                    child: Text("Error"),
+                    child: Text("An Error occured"),
                   );
                 }
                 if (!snapshot.hasData) {
@@ -113,15 +129,28 @@ class _CoinDetailsState extends State<CoinDetails> {
                 }
                 List data = snapshot.data as List;
 
-                return ListView.builder(
-                    itemCount: data.length,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return SingleTransaction(
-                        transactionModel:
-                            TransactionModel.fromJson(data[index]),
-                      );
-                    });
+                if (data.isEmpty) {
+                  return Container(
+                    margin: EdgeInsets.only(top: 30),
+                    child: Center(
+                      child: Text(
+                          "No " + widget.coinModel.name + " Transaction found"),
+                    ),
+                  );
+                }
+
+                return Expanded(
+                  child: ListView.builder(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemCount: data.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return SingleTransaction(
+                          transactionModel:
+                              TransactionModel.fromJson(data[index]),
+                        );
+                      }),
+                );
               }),
             ),
           ),

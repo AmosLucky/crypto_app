@@ -3,6 +3,8 @@ import 'package:crypto_app_mobile/models/coin_model.dart';
 import 'package:crypto_app_mobile/widget/app_title.dart';
 import 'package:flutter/material.dart';
 
+import '../repos/utils.dart';
+
 class SingleCoin extends StatelessWidget {
   CoinModel coinModel;
   SingleCoin({super.key, required this.coinModel});
@@ -25,7 +27,7 @@ class SingleCoin extends StatelessWidget {
             ),
           ),
           trailing: BoldText(
-            text: "\$" + coinModel.balance.toString(),
+            text: makeCurrency(coinModel.balance),
             textColor: whiteColor,
           ),
         ),

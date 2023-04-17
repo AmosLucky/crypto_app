@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:crypto_app_mobile/screens/sign_in.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -30,7 +31,15 @@ class AccountManager extends ChangeNotifier {
   AccountManager() {
     _loginMsg = "";
     _msg = "";
+    print("opppp");
     notifyListeners();
+
+    if (_userModel != null) {
+      print("jjjj");
+      refreshUser(_userModel!.id);
+    } else {
+      print("1111");
+    }
   }
 
   void toggelAdmin(bool isAdmin) {
@@ -78,41 +87,33 @@ class AccountManager extends ChangeNotifier {
       dynamic result = jsonDecode(response.body);
       print(response.statusCode);
 
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         print(result);
 
         /// GeneralRepo().navigateToScreen2(HomeScreen());
         // isSuccessful = true;
-        // if (result["status"] == true) {
+        if (result["status"] == true) {
+          UserModel userModel = UserModel.fromJson(result["data"]);
+          currentUser = userModel;
+          _userModel = userModel;
+          notifyListeners();
 
-        UserModel userModel = UserModel(
-            id: "1",
-            name: "Lucky",
-            username: "Mark Lucky",
-            email: "mark@gmail.com",
-            access: "user",
-            token: "123456",
-            status: "active",
-            balance: "balanace",
-            coins: coins);
-        currentUser = userModel;
-        _userModel = userModel;
-        notifyListeners();
-
-        NavigationService().replaceScreen(DashboardScreen(
-          userModel: userModel,
-        ));
-        // }
+          NavigationService().replaceScreen(DashboardScreen(
+            userModel: userModel,
+          ));
+        } else {
+          _loginMsg = result["message"];
+        }
         // print(result);
         // var username = result["username"];
         // var access = result["access"];
         // var token = result["token"];
 
         //_loginMsg = result["message"];
-        _loginMsg = "successfull";
+        // _loginMsg = "successfull";
       } else {
         _loginMsg =
-            "Not true"; //response.statusCode.toString(); //"An Error occoured";
+            "An error occoured"; //response.statusCode.toString(); //"An Error occoured";
       }
     } catch (e) {
       _loginMsg = e.toString();
@@ -142,34 +143,42 @@ class AccountManager extends ChangeNotifier {
       _isLoding = false;
       dynamic result = jsonDecode(response.body);
 
-      if (response.statusCode == 201) {
-        _msg = "success";
+      print(result);
+
+      if (response.statusCode == 200) {
+        var status = result['status'];
+        if (status == true) {
+          _msg = "success";
+          UserModel userModel = UserModel.fromJson(result['data']);
+
+          currentUser = userModel;
+          _userModel = userModel;
+          notifyListeners();
+
+          NavigationService().replaceScreen(DashboardScreen(
+            userModel: userModel,
+          ));
+
+          return true;
+        } else {
+          _msg = result['message'];
+        }
+        //_msg = "success";
         //result["message"];
-        Map<String, dynamic> extra = {
-          "access": "user",
-          "token": "123456",
-          "status": "active",
-          "balance": "90000",
-          "coins": coins
-        };
+        // Map<String, dynamic> extra = {
+        //   "access": "user",
+        //   "token": "123456",
+        //   "status": "active",
+        //   "balance": "90000",
+        //   "coins": coins
+        // };
 
-        UserModel userModel = UserModel.fromJson(userData..addAll(extra));
-
-        currentUser = userModel;
-        _userModel = userModel;
-        notifyListeners();
-
-        NavigationService().replaceScreen(DashboardScreen(
-          userModel: userModel,
-        ));
-
-        return true;
       } else {
-        _msg = "success";
+        _msg = "An error occoures " + response.statusCode.toString();
       }
 
       notifyListeners();
-      return false;
+      // return false;
     } catch (e) {
       _isLoding = false;
       _msg = e.toString();
@@ -178,5 +187,154 @@ class AccountManager extends ChangeNotifier {
     notifyListeners();
 
     return false;
+  }
+
+  void refreshUser(
+    var id,
+  ) async {
+    Response response =
+        await http.post(Uri.parse(getUsrByIdUrl), body: {"id": id.toString()});
+    dynamic result = jsonDecode(response.body);
+    print(response.statusCode);
+
+    if (response.statusCode == 200) {
+      print(result);
+
+      /// GeneralRepo().navigateToScreen2(HomeScreen());
+      // isSuccessful = true;
+      if (result["status"] == true) {
+        UserModel userModel = UserModel.fromJson(result["data"]);
+        currentUser = userModel;
+        _userModel = userModel;
+        notifyListeners();
+      }
+    }
+  }
+
+  void updateUser({required Map<String, dynamic> userData}) async {
+    _isLoding = true;
+    notifyListeners();
+
+    try {
+      print(userData);
+
+      Response response = await http
+          .post(Uri.parse(updateUserUrl), body: jsonEncode(userData), headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer ' "",
+      });
+      _isLoding = false;
+      dynamic result = jsonDecode(response.body);
+
+      print(result);
+
+      if (response.statusCode == 200) {
+        var status = result['status'];
+        if (status == true) {
+          _msg = "success";
+          UserModel userModel = UserModel.fromJson(result['data']);
+
+          currentUser = userModel;
+          _userModel = userModel;
+          notifyListeners();
+
+          // NavigationService().replaceScreen(DashboardScreen(
+          //   userModel: userModel,
+          // ));
+        } else {
+          _msg = result['message'];
+        }
+        //_msg = "success";
+        //result["message"];
+        // Map<String, dynamic> extra = {
+        //   "access": "user",
+        //   "token": "123456",
+        //   "status": "active",
+        //   "balance": "90000",
+        //   "coins": coins
+        // };
+
+      } else {
+        _msg = "An error occoures " + response.statusCode.toString();
+      }
+
+      notifyListeners();
+      // return false;
+    } catch (e) {
+      _isLoding = false;
+      _msg = e.toString();
+    }
+
+    notifyListeners();
+  }
+
+  void updateUserPassword({required Map<String, dynamic> userData}) async {
+    _isLoding = true;
+    notifyListeners();
+    //print(userData);
+
+    if (userData['new_password'].toString() !=
+        userData['confirm_password'].toString()) {
+      _msg = "new password does not match confirm password";
+     // print(userData);
+      _isLoding = false;
+      notifyListeners();
+      return;
+    }
+
+    try {
+      print(userData);
+
+      Response response = await http.post(Uri.parse(update_user_passwordUrl),
+          body: jsonEncode(userData),
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer ' "",
+          });
+      _isLoding = false;
+      dynamic result = jsonDecode(response.body);
+
+      print(result);
+
+      if (response.statusCode == 200) {
+        var status = result['status'];
+        if (status == true) {
+          _msg = "Please signin again with your new password";
+          UserModel userModel = UserModel.fromJson(result['data']);
+
+          // currentUser = userModel;
+          // _userModel = userModel;
+          notifyListeners();
+
+          Future.delayed(Duration(seconds: 3), () {
+            NavigationService().replaceScreen(SignIn());
+          });
+        } else {
+          _msg = result['message'];
+        }
+        //_msg = "success";
+        //result["message"];
+        // Map<String, dynamic> extra = {
+        //   "access": "user",
+        //   "token": "123456",
+        //   "status": "active",
+        //   "balance": "90000",
+        //   "coins": coins
+        // };
+
+      } else {
+        _msg = "An error occoures " + response.statusCode.toString();
+      }
+
+      notifyListeners();
+      // return false;
+    } catch (e) {
+      _isLoding = false;
+      _msg = e.toString();
+    }
+
+    notifyListeners();
   }
 }

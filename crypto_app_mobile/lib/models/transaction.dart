@@ -27,7 +27,7 @@ class Welcome {
         symbol: json["symbol"],
         type: json["type"],
         status: json["status"],
-        date: json["date"],
+        date: json["created_at"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -36,6 +36,6 @@ class Welcome {
         "symbol": symbol,
         "type": type,
         "status": status,
-        "date": date,
+        "created_at": date,
       };
 }

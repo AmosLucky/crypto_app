@@ -1,13 +1,16 @@
 import 'package:crypto_app_mobile/constants/colors.dart';
 import 'package:crypto_app_mobile/models/usermodel.dart';
+import 'package:crypto_app_mobile/screens/transactions_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 
+import '../repos/account_manager.dart';
 import '../repos/general.dart';
 import 'home_screen.dart';
+import 'profile_screen.dart';
 
 class DashboardScreen extends StatefulWidget {
   UserModel userModel;
@@ -20,17 +23,14 @@ class DashboardScreen extends StatefulWidget {
 class _DashboardScreenState extends State<DashboardScreen> {
   List<Widget> pages = [
     HomeScreen(),
-    Container(
-      color: Colors.yellow,
-    ),
-    Container(
-      color: Colors.blue,
-    ),
+    TransactionScreen(),
+    ProfileSceen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     GeneralRepo generalRepo = context.watch<GeneralRepo>();
+    AccountManager accountManager = context.watch<AccountManager>();
 
     return WillPopScope(
       onWillPop: () async {
@@ -46,6 +46,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon(Icons.person),
           ],
           onTap: (index) {
+            if (index == 0) {
+              accountManager.refreshUser(accountManager.userModel.id);
+            }
             //Handle button tap
             generalRepo.setPageIndex(index);
           },

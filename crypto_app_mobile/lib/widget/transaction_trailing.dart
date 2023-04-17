@@ -8,15 +8,15 @@ class TransactionTailing extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return type == "1"
+    return type == "credit"
         ? Container(
             child: Column(
               children: [
                 Icon(
-                  Icons.arrow_upward,
+                  Icons.arrow_downward,
                   color: Colors.green,
                 ),
-                Text("Recieved")
+                Text(type)
               ],
             ),
           )
@@ -24,10 +24,10 @@ class TransactionTailing extends StatelessWidget {
             child: Column(
               children: [
                 Icon(
-                  Icons.arrow_downward,
+                  Icons.arrow_upward,
                   color: Colors.red,
                 ),
-                Text("Sent")
+                Text(type)
               ],
             ),
           );

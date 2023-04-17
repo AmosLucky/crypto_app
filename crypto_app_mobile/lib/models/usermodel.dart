@@ -17,10 +17,10 @@ class UserModel {
   dynamic updatedAt;
   dynamic createdAt;
   dynamic id;
-  dynamic token;
-  dynamic phone;
+  dynamic token = " ";
+  dynamic phone = "";
   dynamic balance;
-  List<Map<String, dynamic>> coins = [];
+  var coins = [];
   UserModel(
       {this.name,
       this.username,
@@ -50,7 +50,7 @@ class UserModel {
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         username: json["username"] ?? "",
         access: json["access"] ?? "",
-        token: json["token"] ?? "",
+        //token: json["token"] ?? "",
         email: json["email"] ?? "",
         name: json["name"] ?? "",
         balance: json["balance"] ?? "",
@@ -59,7 +59,7 @@ class UserModel {
         id: json["id"] ?? "",
         phone: json["phone"] ?? "",
         status: json["status"] ?? "",
-        coins: json["coins"] ?? "",
+        coins: json["coins"] ?? [],
       );
 
   Map<String, dynamic> toJson() => {
