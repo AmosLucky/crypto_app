@@ -1,2 +1,2 @@
-var appName = "Crypto App";
-var slogan = "...best investment platform";
+var appName = "Coinix Wallet";
+var slogan = "...best crypto wallet";

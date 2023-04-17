@@ -5,6 +5,7 @@ import 'package:crypto_app_mobile/constants/dimensions.dart';
 import 'package:crypto_app_mobile/models/coin_model.dart';
 import 'package:crypto_app_mobile/repos/account_manager.dart';
 import 'package:crypto_app_mobile/screens/coin_details.dart';
+import 'package:crypto_app_mobile/screens/profile_screen.dart';
 import 'package:crypto_app_mobile/screens/receive_screen.dart';
 import 'package:crypto_app_mobile/widget/single_coin.dart';
 import 'package:flutter/material.dart';
@@ -28,8 +29,6 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    // AccountManager().refreshUser(currentUser!.id);
-    // TODO: implement initState
     super.initState();
   }
 
@@ -61,7 +60,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontSize: 20,
                       ),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            GeneralRepo()
+                                .navigateToScreen(context, ProfileSceen());
+                          },
                           icon: Icon(
                             Icons.person_outline,
                             color: Colors.white,

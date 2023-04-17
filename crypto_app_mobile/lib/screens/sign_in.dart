@@ -26,8 +26,8 @@ class _SignInState extends State<SignIn> {
   var passwordCRT = new TextEditingController();
   @override
   void initState() {
-    emailCRT.text = "mark@gmail.com";
-    passwordCRT.text = "123456";
+    // emailCRT.text = "mark@gmail.com";
+    // passwordCRT.text = "123456";
     // TODO: implement initState
     super.initState();
   }
@@ -59,7 +59,10 @@ class _SignInState extends State<SignIn> {
                             SizedBox(
                               height: size.height * 0.04,
                             ),
-                            Container(child: AppTitle()),
+                            Container(
+                                child: AppTitle(
+                              fontSize: 25,
+                            )),
                             SizedBox(
                               height: size.height * 0.04,
                             ),

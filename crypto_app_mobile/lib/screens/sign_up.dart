@@ -57,7 +57,10 @@ class _SignInState extends State<SignUp> {
                             SizedBox(
                               height: size.height * 0.04,
                             ),
-                            Container(child: AppTitle()),
+                            Container(
+                                child: AppTitle(
+                              fontSize: 20,
+                            )),
                             SizedBox(
                               height: size.height * 0.04,
                             ),
