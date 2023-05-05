@@ -7,9 +7,9 @@
                 <div class="col-md-12">
                     <div class="sign-in__top center">
                         <a href="/">
-                            <img id="site-logo" src="assets/images/logo/logo-main.png"
+                            <img id="site-logo" src="{{ asset('assets/logo/coinix_white2.png') }}"
                             alt="Monteno" width="165" height="40"
-                            data-retina="assets/images/logo/logo-main@x2.png" data-width="165"
+                            data-retina="{{ asset('assets/logo/coinix_white2.png') }}" data-width="165"
                             data-height="40">
                         </a>
                     </div>

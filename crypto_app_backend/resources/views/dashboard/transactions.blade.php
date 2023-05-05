@@ -30,6 +30,7 @@
                                                 
                                             </tr>
                                         </thead>
+                                        
 
                                         <tbody>
                                             @foreach($transactions as $transaction)

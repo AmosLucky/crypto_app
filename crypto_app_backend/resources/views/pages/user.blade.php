@@ -15,11 +15,12 @@
                         <br>Download the mobile app now!
                         </p>
                         <div class="row justify-content-center">
-                                <a class="btn-action" style="width:200px" href="login">
+                                <a href="{{asset('assets/mobile/coinix_wallet.apk')}}" class="btn-action" style="width:200px">
                                     <span>DOWNLOAD APP</span>
                                 </a>
                             </div>
                     </div>
+                   
                 </div>
                 <div class="col-md-6 mt-3">
                 <div class="row justify-content-center">
@@ -29,11 +30,14 @@
             </div>
             
 
-            <!-- <div class="row justify-content-center">
-                                <a class="btn-action" style="width:200px" href="login">
-                                    <span>DOWNLOAD APP</span>
-                                </a>
-                            </div> -->
+            <div class="row justify-content-center">
+            <div style="width:100px">
+                        <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                            <input type="submit" value="logout" class="btn btn-danger"/>
+                        </form>
+                    </div>
+                            </div>
         </div>
     </section>
     <!-- End Section Choose -->

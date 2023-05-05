@@ -9,6 +9,8 @@ use App\Models\Transaction;
 use App\Models\Balance;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Mail;
+use DateTime;
 
 
 class UserController extends Controller
@@ -221,6 +223,166 @@ class UserController extends Controller
         
 
     }
+
+
+    public function resend(Request $request){
+        $user = User::where('id',$request->user_id)->first();
+
+    $user->sendEmailVerificationNotification();
+
+    return response()->json(['status'=>true,"msg"=>"email sent"], 200) ;
+
+    }
+
+
+   public function reSendVerification(Request $request) {
+   
+     
+    
+     $name="Coinix Wallet";
+     $user= User::find($request->user_id);
+     $randomNumber = rand(1000, 9999);
+     $user->remember_token = $randomNumber;
+     $user->update();
+
+      Mail::send('email.resend_verification',compact("user","name","randomNumber"), function($message) use ($user, $name,$randomNumber){
+        
+         $message->to($user->email, $name)->subject
+            ('Welcome to coinix Wallet');
+         $message->from('support@coinixpro.com',$name);
+      });
+
+      return response()->json(['status'=>true,"msg"=>"email sent"], 200) ;
+
+      
+   }
+
+   
+
+
+
+   public function verify(Request $request) {
+   
+     
+    
+    
+    $user= User::find($request->user_id);
+    $date = new DateTime();
+ 
+
+    if($user->remember_token == $request->code){
+
+        $user-> email_verified_at = $date->format('Y-m-d H:i:s');
+        $user->update();
+
+        return response()->json( ['status'=>true,"data"=>$user], 200) ;
+
+
+    }
+
+
+     
+  return response()->json( ['status'=>false,"data"=>$user], 200) ;
+
+     
+  }
+
+  public function ForgotPassword(Request $request){
+    $user= User::where("email",$request->email)->first();
+
+    if($user != null){
+
+        $name="Coinix Wallet";
+        
+        $randomNumber = rand(1000, 9999);
+        $user->remember_token = $randomNumber;
+        $user->update();
+   
+         Mail::send('email.forgot_password',compact("user","name","randomNumber"), function($message) use ($user, $name,$randomNumber){
+           
+            $message->to($user->email, $name)->subject
+               ('Welcome to coinix Wallet');
+            $message->from('support@coinixpro.com',$name);
+         });
+
+         return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
+
+
+    }else{
+        return response()->json( ['status'=>false,"msg"=>"User with this email not found"], 200) ;
+
+    }
+
+  }
+
+  public function resetPassword(Request $request){
+
+    $user= User::where("email",$request->email)->first();
+
+   
+
+    if($user != null){
+
+        if($request->code ==  $user->remember_token){
+            $user->password = Hash::make($request->new_password);
+            $user->update();
+
+            return response()->json( ['status'=>true,"msg"=>"successful"], 200) ;
+
+        
+        }else{
+
+            return response()->json( ['status'=>false,"msg"=>"Incorrect code"], 200) ;
+
+
+        }
+
+       
+
+     }else{
+        return response()->json( ['status'=>false,"msg"=>"User with this email not found"], 200) ;
+
+    }
+
+
+
+
+
+  }
+
+
+  ///////TRANSCTION PIN////////
+
+  public function setTransactionPin(Request $request){
+    $user = User::find($request->user_id);
+
+    if($request->type == 0){
+        $user->transaction_pin = $request->transaction_pin;
+        $user->update();
+
+        return response()->json( ['status'=>true,"msg"=>"successful"], 200);
+
+
+    }
+    
+   
+    if(!Hash::check($request['password'],$user->password)){
+        $user->transaction_pin = $request->transaction_pin;
+        $user->update();
+
+        return response()->json( ['status'=>true,"msg"=>"successful"], 200);
+
+
+
+    }else{
+
+        return response()->json( ['status'=>false,"msg"=>"An error occoureds"], 200) ;
+
+
+    }
+
+  }
+
 
 
 

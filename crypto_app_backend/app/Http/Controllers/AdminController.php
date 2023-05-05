@@ -22,16 +22,21 @@ class AdminController extends Controller
     public static function checkUser()
     {
 
+        if(!auth()->user()){
+            return redirect()->to('mobile-user')->send();
+
+            header("Location: /user");
+
+        }
         
-        
-       // if(auth()->user()->is_admin != 1){
+       else if(auth()->user()->is_admin != 1){
             //dd(auth()->user()->is_admin);
 
-            //return redirect()->to('mobile-user')->send();
+            return redirect()->to('mobile-user')->send();
 
-            //header("Location: /user");
+            header("Location: /user");
 
-       // }
+       }
 
     }
 

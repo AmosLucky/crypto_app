@@ -1,6 +1,6 @@
 @php
 
-$company_name = "CryptoApp";
+$company_name = "Coinix Wallet";
 
 @endphp
 <!DOCTYPE html>
@@ -18,7 +18,7 @@ $company_name = "CryptoApp";
     <!-- end Styles -->
 
     <!-- Favicon and Touch Icons  -->
-    <link rel="shortcut icon" href="assets/images/logo/favicon-main.png">
+    <link rel="shortcut icon" href="{{ asset('logo/coinix.png') }}">
     <link rel="apple-touch-icon-precomposed" href="assets/images/logo/favicon.png">
 
 </head>
@@ -55,9 +55,9 @@ $company_name = "CryptoApp";
                     <div class="header__body">
                         <div class="header__logo">
                             <a href="/">
-                                <img id="site-logo" src="assets/images/logo/logo-main.png"
-                                alt="ICOLand" width="165" height="40"
-                                data-retina="assets/images/logo/logo-main@x2.png" data-width="165"
+                                <img id="site-logo" src="{{ asset('assets/logo/coinix_white2.png') }}"
+                                alt="Coinix wallet" width="165" height="40"
+                                data-retina="{{ asset('assets/logo/coinix_white2.png') }}" data-width="165"
                                 data-height="40">
                             </a>
                         </div>
@@ -71,7 +71,7 @@ $company_name = "CryptoApp";
                                     </li>
                                    
                                     <li class="menu-item">
-                                        <a href="about">about</a>
+                                        <a href="about">About Us</a>
                                     </li>
                                    
                                     <li class="menu-item"><a href="login">Sign In</a></li>

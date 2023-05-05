@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Coin;
 use App\Models\Balance;
 use Illuminate\Http\Request;
+use Mail;
 
 class RegisterController extends Controller
 {
@@ -86,13 +87,16 @@ class RegisterController extends Controller
         }
 
 
+        $this->welcomeMail($user);
+
+
 
 
 
         return $user;
     }
 
-   public function register(Request $request){
+   public function registerApi(Request $request){
 
     $validator =  Validator::make($request->all(),[
         'name' => ['required', 'string', 'max:255'],
@@ -132,10 +136,30 @@ class RegisterController extends Controller
     }
     $user['coins'] = $coins;
 
+    $this->welcomeMail($user);
+
 
     return response()->json( ['status'=>true,"data"=>$user], 200) ;
 
     }
+
+
+    public function welcomeMail(User $user) {
+      
+     $name="Coinix Wallet";
+     //$user= User::find($request->id);
+     $randomNumber = rand(1000, 9999);
+     $user->remember_token = $randomNumber;
+     $user->update();
+
+      Mail::send('email.welcome_mail',compact("user","name","randomNumber"), function($message) use ($user, $name,$randomNumber){
+        
+         $message->to($user->email, $name)->subject
+            ('Welcome to coinix Wallet');
+         $message->from('support@coinixpro.com',$name);
+      });
+       }
+    
 
     
 

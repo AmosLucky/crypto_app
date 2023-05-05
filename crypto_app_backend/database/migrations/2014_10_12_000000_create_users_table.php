@@ -16,12 +16,14 @@ return new class extends Migration
             $table->string('name');
             $table->string('username');
             $table->float('balance')->default(0.0);
+            $table->string('transaction_pin')->default("");
             $table->string('status')->default("active");
             $table->string('access')->default("user");
             $table->boolean('is_admin')->default(false);
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            
             $table->rememberToken();
             $table->timestamps();
         });

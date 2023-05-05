@@ -83,21 +83,33 @@
 
                                 @foreach($coins as $coin)
 
+                                <form method="POST" action="{{ route('update_coin') }}">
+                                @csrf
+
                                 <tr>
                                 <td>
                                 {{$coin->name}}
                                 </td>
                                 <td>
-                                    <img src="{{ asset('storage/images/'.$coin->image) }}" height="100" />
+                                    <img src="{{ asset('storage/images/'.$coin->image) }}" height="50" width="50" />
                                     <br>
-                                    {{$coin->address}}
+                                    <br>
+                                   <input name="address" value="{{$coin->address}}" />
+                                   <br>
+                                   <input type="hidden" name="id" value="{{$coin->id}}" />
                                <!-- <a href="coin/delete/{{$coin->id}}">
                                <button class="btn btn-danger">
                                     Delete
                                 </button>
                                </a> -->
+                               <br>
+                               
+                               <input class="btn btn-primary" value="Update" type="submit">
+                                   
+                                
                                 </td>
                                 </tr>
+</form>
 
                                
 

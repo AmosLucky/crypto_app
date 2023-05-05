@@ -87,6 +87,14 @@ class CoinController extends Controller
      */
     public function update(Request $request, Coin $coin)
     {
+        $coin = Coin::find($request->id);
+
+        $coin -> address = $request->address;
+        $coin->save();
+        $msg = "Successfuly updated";
+
+        return redirect()->back()->with(['msg' => $msg]);
+
         //
     }
 
