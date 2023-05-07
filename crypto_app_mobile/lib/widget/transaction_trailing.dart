@@ -1,35 +1,31 @@
+import 'package:crypto_app_mobile/models/transaction_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
+
 
 class TransactionTailing extends StatelessWidget {
   var type;
-  TransactionTailing({super.key, required this.type});
+  TransactionModel tm;
+  TransactionTailing({super.key, required this.type, required this.tm});
 
   @override
   Widget build(BuildContext context) {
-    return type == "credit"
-        ? Container(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.arrow_downward,
-                  color: Colors.green,
-                ),
-                Text(type)
-              ],
-            ),
-          )
-        : Container(
-            child: Column(
-              children: [
-                Icon(
-                  Icons.arrow_upward,
-                  color: Colors.red,
-                ),
-                Text(type)
-              ],
-            ),
-          );
+    return Column(
+      children: [
+        type == "credit"
+            ? Icon(
+                Icons.arrow_downward,
+                color: Colors.green,
+              )
+            : Icon(
+                Icons.arrow_upward,
+                color: Colors.red,
+              ),
+        Text(type),
+        Text(
+          tm.status.toString(),
+          style: TextStyle(fontSize: 9),
+        )
+      ],
+    );
   }
 }

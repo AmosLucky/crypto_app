@@ -42,6 +42,8 @@ dependencies:
   flutter_launcher_icons:
   curved_navigation_bar:
   modal_bottom_sheet: ^2.1.2
+  flutter_otp_text_field:
+  shared_preferences: ^2.1.0
 
 dev_dependencies:
   flutter_test:

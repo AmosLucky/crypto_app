@@ -34,10 +34,11 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
                 width: getSize(context).width,
                 padding: EdgeInsets.symmetric(vertical: 40, horizontal: 20),
                 child: Column(children: [
-                  Image.network(
-                    widget.coinModel.qr_code,
-                    fit: BoxFit.fill,
-                  ),
+                  Image.network(widget.coinModel.qr_code, fit: BoxFit.fill,
+                      loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return CircularProgressIndicator();
+                  }),
                   SizedBox(
                     height: 20,
                   ),

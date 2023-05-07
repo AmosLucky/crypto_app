@@ -28,6 +28,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         navigatorKey: NavigationService().navigationKey,
+        debugShowCheckedModeBanner: false,
         title: appName,
         theme: ThemeData(
           fontFamily: "raleway",

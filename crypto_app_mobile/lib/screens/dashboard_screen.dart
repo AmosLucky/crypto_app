@@ -28,6 +28,12 @@ class _DashboardScreenState extends State<DashboardScreen> {
   ];
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     GeneralRepo generalRepo = context.watch<GeneralRepo>();
     AccountManager accountManager = context.watch<AccountManager>();
@@ -47,8 +53,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ],
           onTap: (index) {
             if (index == 0) {
-              accountManager.refreshUser(accountManager.userModel.id);
+              // accountManager.refreshUser(accountManager.userModel.id);
             }
+            // accountManager.updateCoins();
             //Handle button tap
             generalRepo.setPageIndex(index);
           },

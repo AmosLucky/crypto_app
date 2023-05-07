@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:crypto_app_mobile/constants/api_uri.dart';
 import 'package:crypto_app_mobile/models/coin_model.dart';
+import 'package:crypto_app_mobile/models/usermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
@@ -35,9 +36,22 @@ class TransactionRepo extends ChangeNotifier {
   }
 
   Future<bool> sendCoin(
-      {var user_id, var amount, var address, CoinModel? coinModel}) async {
+      {var userPin,
+      var pin,
+      var user_id,
+      var amount,
+      var address,
+      CoinModel? coinModel}) async {
     _isLoding = true;
+    _msg = "";
     notifyListeners();
+
+    if (pin != userPin) {
+      _isLoding = false;
+      _msg = "Incorrect transaction pin";
+      notifyListeners();
+      return false;
+    }
     try {
       Response response = await http.post(Uri.parse(send_coin), body: {
         "user_id": user_id.toString(),
@@ -50,12 +64,19 @@ class TransactionRepo extends ChangeNotifier {
       print(response.statusCode);
 
       if (response.statusCode == 200) {
-        print(result);
-        _msg = "Successful status pending";
-        _isLoding = false;
-        notifyListeners();
+        if (result['status']) {
+          print(result);
+          _msg = result['msg'];
+          _isLoding = false;
+          notifyListeners();
 
-        return result['status'];
+          return result['status'];
+        } else {
+          _msg = result['msg'];
+          _isLoding = false;
+          notifyListeners();
+          return result['status'];
+        }
 
         /// GeneralRepo().navigateToScreen2(HomeScreen());
         // isSuccessful = true;

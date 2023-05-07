@@ -1,3 +1,4 @@
+import 'package:crypto_app_mobile/screens/reset_password.dart';
 import 'package:crypto_app_mobile/screens/sign_up.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../widget/app_title.dart';
 import '../widget/booton1.dart';
 import '../widget/opacity_bg.dart';
 import '../widget/textinputfield.dart';
+import 'forget_password.dart';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -26,10 +28,15 @@ class _SignInState extends State<SignIn> {
   var passwordCRT = new TextEditingController();
   @override
   void initState() {
+    getOldEmail();
     // emailCRT.text = "mark@gmail.com";
     // passwordCRT.text = "123456";
     // TODO: implement initState
     super.initState();
+  }
+
+  getOldEmail() async {
+    emailCRT.text = await AccountManager().getEmail();
   }
 
   @override
@@ -108,7 +115,15 @@ class _SignInState extends State<SignIn> {
                                   //crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    InkWell(child: Text("Forget password")),
+                                    InkWell(
+                                        onTap: () {
+                                          GeneralRepo().navigateToScreen(
+                                              context, ForgetPassword());
+                                        },
+                                        child: Text(
+                                          "Forgot password",
+                                          style: TextStyle(color: primaryColor),
+                                        )),
                                   ]),
                             ),
                             SizedBox(
