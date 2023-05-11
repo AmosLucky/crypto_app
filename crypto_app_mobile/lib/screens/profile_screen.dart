@@ -14,6 +14,7 @@ import 'package:provider/provider.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 
 import 'change_password.dart';
+import 'forgot_pin.dart';
 
 class ProfileSceen extends StatefulWidget {
   const ProfileSceen({super.key});
@@ -26,6 +27,7 @@ class _ProfileSceenState extends State<ProfileSceen> {
   @override
   Widget build(BuildContext context) {
     AccountManager accountManager = context.watch<AccountManager>();
+    GeneralRepo generalRepo = context.watch<GeneralRepo>();
     return Scaffold(
       backgroundColor: lightIndego,
       appBar: AppBar(
@@ -49,9 +51,12 @@ class _ProfileSceenState extends State<ProfileSceen> {
                         "Confirm",
                         style: TextStyle(color: Colors.white, fontSize: 20),
                       ),
-                      onPressed: () => Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (context) => SignIn()),
-                          (route) => false),
+                      onPressed: () {
+                        generalRepo.setPageIndex(0);
+                        Navigator.of(context).pushAndRemoveUntil(
+                            MaterialPageRoute(builder: (context) => SignIn()),
+                            (route) => false);
+                      },
                       width: 120,
                     ),
                     DialogButton(
@@ -106,6 +111,19 @@ class _ProfileSceenState extends State<ProfileSceen> {
                     child: Icon(Icons.person),
                   ),
                   title: Text("Edit Profile"),
+                  trailing: Icon(Icons.keyboard_arrow_right),
+                )),
+              ),
+              InkWell(
+                onTap: () {
+                  GeneralRepo().navigateToScreen(context, ForgetPin());
+                },
+                child: Card(
+                    child: ListTile(
+                  leading: CircleAvatar(
+                    child: Icon(Icons.lock),
+                  ),
+                  title: Text("Change Transaction pin"),
                   trailing: Icon(Icons.keyboard_arrow_right),
                 )),
               ),

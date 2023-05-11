@@ -12,12 +12,14 @@ class SingleTransaction extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: ListTile(
+        
         leading: CircleAvatar(
             child: Text(transactionModel.name.substring(0, 1).toUpperCase())),
-        title: Text(makeCurrency(transactionModel.amount)),
-        subtitle: Text(transactionModel.status.toString()),
+        title: Text(addCommas(transactionModel.amount)),
+        subtitle: Text(transactionModel.name.toString()),
         trailing: TransactionTailing(
           type: transactionModel.type,
+          tm: transactionModel,
         ),
       ),
     );

@@ -12,7 +12,11 @@ class CoinModel {
       required this.image,
       required this.id,
       required this.qr_code,
-      required this.address});
+      required this.address,
+      this.current_price,
+      this.amount}) {
+    //current_price = "0.00";
+  }
 
   String name;
   int balance;
@@ -21,6 +25,8 @@ class CoinModel {
   String qr_code;
   int id;
   String address;
+  String? current_price = "";
+  String? amount;
 
   factory CoinModel.fromJson(Map<String, dynamic> json) => CoinModel(
       name: json["name"],
@@ -29,7 +35,9 @@ class CoinModel {
       image: json["image"],
       qr_code: json['qr_code'],
       id: json['id'],
-      address: json['address']);
+      address: json['address'],
+      current_price: json['current_price'] ?? "Loading....",
+      amount: json['amount'] ?? "Loading....");
 
   Map<String, dynamic> toJson() => {
         "name": name,

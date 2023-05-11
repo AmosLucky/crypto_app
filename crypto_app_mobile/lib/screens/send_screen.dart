@@ -1,6 +1,7 @@
 import 'package:crypto_app_mobile/constants/dimensions.dart';
 import 'package:crypto_app_mobile/models/transaction_model.dart';
 import 'package:crypto_app_mobile/repos/coin_repo.dart';
+import 'package:crypto_app_mobile/repos/general.dart';
 import 'package:crypto_app_mobile/repos/transaction_repo.dart';
 import 'package:crypto_app_mobile/repos/utils.dart';
 import 'package:crypto_app_mobile/widget/circular_action.dart';
@@ -17,6 +18,7 @@ import '../repos/account_manager.dart';
 import '../widget/app_title.dart';
 import '../widget/booton1.dart';
 import '../widget/textinputfield.dart';
+import 'forgot_pin.dart';
 
 class SendScreen extends StatefulWidget {
   CoinModel coinModel;
@@ -28,14 +30,17 @@ class SendScreen extends StatefulWidget {
 
 class _SendScreenState extends State<SendScreen> {
   var _formKey = GlobalKey<FormState>();
+  var _formKey2 = GlobalKey<FormState>();
   TextEditingController addressCTR = new TextEditingController();
   TextEditingController amountCTR = new TextEditingController();
+  TextEditingController pinCtr = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     CoinRepo coinRepo = context.watch<CoinRepo>();
     AccountManager accountManager = context.watch<AccountManager>();
     TransactionRepo transactionRepo = context.watch<TransactionRepo>();
+
     return Scaffold(
       backgroundColor: deepIndego,
       appBar: AppBar(
@@ -72,7 +77,7 @@ class _SendScreenState extends State<SendScreen> {
                         Text("Balance"),
                         Container(
                           child: BoldText(
-                            text: makeCurrency(widget.coinModel.balance),
+                            text: addCommas(widget.coinModel.balance),
                             textColor: deepIndego,
                             fontSize: 25,
                           ),
@@ -96,7 +101,7 @@ class _SendScreenState extends State<SendScreen> {
                           height: 20,
                         ),
                         TextInput(
-                          labelText: "Amount in usd",
+                          labelText: "Amount in " + widget.coinModel.name,
                           controller: amountCTR,
                           icon: Icons.diamond,
                           textInputType: TextInputType.number,
@@ -126,10 +131,50 @@ class _SendScreenState extends State<SendScreen> {
                                 context: context,
                                 type: AlertType.warning,
                                 title: "Alert",
-                                desc: "You are about to send " +
-                                    makeCurrency(amountCTR.text) +
+                                desc: "You are about to send \n" +
+                                    (amountCTR.text.trim() +
+                                        " " +
+                                        widget.coinModel.name) +
                                     " to " +
                                     addressCTR.text,
+                                content: Form(
+                                  key: _formKey2,
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      TextInput(
+                                        labelText: "Enter transaction pin",
+                                        controller: pinCtr,
+                                        icon: Icons.lock,
+                                        isPassword: true,
+                                        validator: (text) {
+                                          /// accountManager.inputValidator(text!, "username");
+                                          if (accountManager
+                                              .fieldValidator(text!)) {
+                                            return accountManager
+                                                .fieldValidatorMsg(
+                                                    "transaction pin");
+                                          }
+                                        },
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      InkWell(
+                                        onTap: () {
+                                          GeneralRepo().navigateToScreen(
+                                              context, ForgetPin());
+                                        },
+                                        child: Text(
+                                          "Forgot transaction pin?",
+                                          style: TextStyle(fontSize: 13),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
                                 style: AlertStyle(
                                     titleStyle: TextStyle(
                                         fontWeight: FontWeight.normal,
@@ -144,12 +189,18 @@ class _SendScreenState extends State<SendScreen> {
                                       ),
                                     ),
                                     onPressed: () {
-                                      transactionRepo.sendCoin(
-                                          user_id: accountManager.userModel.id,
-                                          amount: amountCTR.text,
-                                          address: addressCTR.text,
-                                          coinModel: widget.coinModel);
-                                      Navigator.pop(context);
+                                      if (_formKey2.currentState!.validate()) {
+                                        transactionRepo.sendCoin(
+                                            userPin: accountManager
+                                                .userModel.transaction_pin,
+                                            pin: pinCtr.text.trim(),
+                                            user_id:
+                                                accountManager.userModel.id,
+                                            amount: amountCTR.text,
+                                            address: addressCTR.text,
+                                            coinModel: widget.coinModel);
+                                        Navigator.pop(context);
+                                      }
                                     },
                                     width: 120,
                                   )

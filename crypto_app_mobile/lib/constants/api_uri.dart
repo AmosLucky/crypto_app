@@ -1,4 +1,4 @@
-var basedomain = "http://192.168.43.121:8000/api/";
+var basedomain = "https://coinixpro.com/api/";
 
 var loginUrl = basedomain + "login";
 var createAccountUrl = basedomain + "register";
@@ -7,6 +7,14 @@ var getUserTransactionsUrl = basedomain + "get_user_transactions";
 var updateUserUrl = basedomain + "update_user";
 var update_user_passwordUrl = basedomain + "update_user_password";
 var send_coin = basedomain + "send_coin";
+var resend_verification = basedomain + "resend_verification";
+var verification = basedomain + "verify";
+var forgot_pasword = basedomain + "forgot_pasword";
+var reset_password = basedomain + "reset_password";
+var resend_password_code = basedomain + "resend_password_code";
+var set_transaction_pin = basedomain + "set_transaction_pin";
+
+
 // List<Map<String, dynamic>> coins = [
 //   {
 //     "id": 1,

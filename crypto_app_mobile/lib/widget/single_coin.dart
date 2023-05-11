@@ -26,9 +26,25 @@ class SingleCoin extends StatelessWidget {
               color: greyColor,
             ),
           ),
-          trailing: BoldText(
-            text: makeCurrency(coinModel.balance),
-            textColor: whiteColor,
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BoldText(
+                text: addDollarSign(addCommas(coinModel.amount.toString())),
+                textColor: whiteColor,
+              ),
+              Text(
+                (addCommas(coinModel.balance.toString() +
+                    " " +
+                    coinModel.name.substring(0, 3) +
+                    "..")),
+                style: TextStyle(color: Colors.grey),
+              ),
+            ],
+          ),
+          subtitle: Text(
+            addDollarSign(addCommas(coinModel.current_price.toString())),
+            style: TextStyle(color: Colors.grey),
           ),
         ),
       ),

@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     AccountManager accountManager = context.watch<AccountManager>();
+    GeneralRepo generalRepo = context.watch<GeneralRepo>();
     // accountManager.refreshUser(accountManager.userModel.id);
     return Scaffold(
         backgroundColor: Colors.indigo.shade900,
@@ -61,8 +62,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       IconButton(
                           onPressed: () {
-                            GeneralRepo()
-                                .navigateToScreen(context, ProfileSceen());
+                            // print("gggg");
+                            accountManager.updateCoins();
+                            //generalRepo.setPageIndex(2);
+                            // GeneralRepo()
+                            //     .navigateToScreen(context, ProfileSceen());
                           },
                           icon: Icon(
                             Icons.person_outline,
@@ -133,9 +137,10 @@ class _HomeScreenState extends State<HomeScreen> {
               child: RefreshIndicator(
                 onRefresh: () async {
                   accountManager.refreshUser(accountManager.userModel.id);
+                  accountManager.updateCoins();
                 },
                 child: ListView.builder(
-                    itemCount: currentUser!.coins.length,
+                    itemCount: accountManager.userModel.coins.length,
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
