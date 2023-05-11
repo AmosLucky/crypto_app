@@ -72,7 +72,7 @@ use \App\Http\Controllers\BalanceController;
                                                 <th>Name</th>
                                                 <th>Email</th>
                                                 <th>Status</th>
-                                                <th>Balance</th>
+                                                <!-- <th>Balance</th> -->
                                                 <th>Action</th>
                                                 
                                             </tr>
@@ -90,11 +90,11 @@ use \App\Http\Controllers\BalanceController;
                                                 }
                                                  ?>
                                                 >{{$user->status}}</td>
-                                                <td>${{
+                                                <!-- <td>${{
                                                    
                                                     BalanceController::getUserTotalBalance($user->id);
                                                 }}
-                                                </td>
+                                                </td> -->
                                                 <td>
                                                 <div class="dropdown">
   <button type="button" class="btn btn-primary dropdown-toggle" 

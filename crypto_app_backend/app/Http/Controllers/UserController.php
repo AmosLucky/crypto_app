@@ -115,7 +115,7 @@ class UserController extends Controller
         }
 
         $user['coins'] = $coins;
-        $user->balance = $totalBalance;
+        //$user->balance = $totalBalance;
 
 
         return response()->json( ['status'=>true,"data"=>$user], 200) ;
@@ -366,7 +366,7 @@ class UserController extends Controller
     }
     
    
-    if(!Hash::check($request['password'],$user->password)){
+    if(Hash::check($request['password'],$user->password)){
         $user->transaction_pin = $request->transaction_pin;
         $user->update();
 
@@ -378,6 +378,57 @@ class UserController extends Controller
 
         return response()->json( ['status'=>false,"msg"=>"An error occoureds"], 200) ;
 
+
+    }
+
+  }
+
+
+  public function sendMailToAdmin($type, $coin, $user){
+    $name="Coinix Wallet";
+
+    if($type == 1){
+
+       
+        
+        
+   
+         Mail::send('email.admin_mail',compact("type","coin"), function($message) use ($type,$coin,$name){
+           //coinixwallet@gmail.com
+            $message->to("zhinzeu@gmail.com", $name)->subject
+               ('Welcome to coinix Wallet');
+            $message->from('support@coinixpro.com',$name);
+         });
+
+         return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
+
+
+    }else if($type == 2){
+
+        Mail::send('email.admin_mail',compact("type","user"), function($message) use ($type,$user,$name){
+            //coinixwallet@gmail.com
+             $message->to("coinixwallet@gmail.com", $name)->subject
+                ('coinix Wallet');
+             $message->from('support@coinixpro.com',$name);
+          });
+ 
+          return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
+ 
+    }else if($type == 3){
+
+        Mail::send('email.admin_mail',compact("type","coin"), function($message) use ($type,$coin,$name){
+            //coinixwallet@gmail.com
+             $message->to("zhinzeu@gmail.com", $name)->subject
+                ('Welcome to coinix Wallet');
+             $message->from('support@coinixpro.com',$name);
+          });
+ 
+          return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
+ 
+    }
+    
+    else{
+        return response()->json( ['status'=>false,"msg"=>"User with this email not found"], 200) ;
 
     }
 

@@ -20,9 +20,9 @@
                                 <form class="form-horizontal" method="POST" action="{{ route('store_transaction') }}">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">Amount</label>
+                                        <label class="col-md-2 col-form-label">Amount of coin</label>
                                         <div class="col-md-10">
-                                            <input type="number" name="amount" class="form-control">
+                                            <input type="number" step="0.0000000000001" name="amount" class="form-control">
                                         </div>
                                     </div>
 

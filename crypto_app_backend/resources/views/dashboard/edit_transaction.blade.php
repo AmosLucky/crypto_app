@@ -20,7 +20,7 @@
                                 <form class="form-horizontal" method="POST" action="{{ route('update_transaction') }}">
                                     @csrf
                                     <div class="form-group row">
-                                        <label class="col-md-2 col-form-label">Amount</label>
+                                        <label class="col-md-2 col-form-label">Amount of coin</label>
                                         <div class="col-md-10">
                                             <input type="number" name="amount" value="{{$transaction->amount}}" class="form-control">
                                         </div>

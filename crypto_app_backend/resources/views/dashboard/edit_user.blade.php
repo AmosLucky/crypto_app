@@ -27,7 +27,7 @@ use \App\Http\Controllers\BalanceController;
                               
                                 <form class="form-horizontal" method="POST" action="{{ route('update_user') }}">
                                     @csrf
-                                    <div class="form-group row">
+                                    <!-- <div class="form-group row">
                                         <label class="col-md-2 col-form-label">Balance</label>
                                         <div class="col-md-10">
                                             <input type="number" name="balance" class="form-control" value="{{
@@ -35,7 +35,7 @@ use \App\Http\Controllers\BalanceController;
                                                    BalanceController::getUserTotalBalance($user->id);
                                                }}" readonly="">
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group row">
                                         <label class="col-md-2 col-form-label" for="example-email">Email</label>
                                         <div class="col-md-10">
@@ -97,7 +97,7 @@ use \App\Http\Controllers\BalanceController;
                                         <label class="col-md-2 col-form-label" for="example-email">{{$balance->name}}</label>
                                         <div class="col-md-6">
                                             
-                                            <input type="number" value="{{$balance->balance}}" name="balance" class="form-control" placeholder="Email">
+                                            <input type="" value="{{$balance->balance}}" name="balance" class="form-control" placeholder="Amount">
                                         </div>
                                         <div class="col-md-2">
                                             <input type="submit" value="update"  class="btn btn-success">

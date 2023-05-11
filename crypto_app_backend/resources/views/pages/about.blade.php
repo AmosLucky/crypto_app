@@ -8,14 +8,14 @@
                 <div class="col-md-12">
                     <div class="content">
                         <h2 class="title">About Us</h2>
-                        <p class="desc">The Wallet is non-custodial cryptocurrency storage, that supports the most popular coins and their tokens including BTC, BCH, BSV, ETH, NFTs, Ethereum-based tokens (ERC20, ERC721), ETC, ZEC, LTC, XRP, NEO, EOS, DASH, and the others.</p>
+                        <p class="desc">The Wallet is non-custodial cryptocurrency storage, that supports the most popular coins and their tokens including BTC, BCH, BSV, ETH, NFTs, Ethereum-based tokens (ERC20, ERC721), ETC, ZEC, LTC, XRP, NEO, EOS, DASH, and others.</p>
                     </div>
                 </div>
 
                 <div class="col-md-12">
                     <div class="content">
                         <h2 class="title">In Brief</h2>
-                        <p>The first The Wallet for Ethereum (ETH) was launched in 2017. Since then, our team has built a unique ecosystem of blockchain-related products. Guarda squad comprises of highly experienced specialists.</p>
+                        <p>The first Wallet for Ethereum (ETH) was launched in 2017. Since then, our team has built a unique ecosystem of blockchain-related products. Coinix squad comprises highly experienced specialists.</p>
                     </div>
                 </div>
 
@@ -23,8 +23,8 @@
                 <div class="col-md-12">
                     <div class="content">
                         <h2 class="title">Wallet Mission</h2>
-                        <p>Guarda developers created digital wallets that provide complete security. Everyone can use our software for easy storing and managing cryptocurrencies. We respect, appreciate, and sincerely love the blockchain technology. Our priority is the decentralization of the Guarda software in accordance with the basic principles of blockchain.</p>
-                        <p>User privacy and safety are the main postulates for us, that is why we do not store your private keys, backup files, or any other data on Guarda servers. All your private data is stored only by you. Our wallet is lightweight, has a convenient and intuitive interface.</p>
+                        <p>Coinix developers created digital wallets that provide complete security. Everyone can use our software for easy storing and managing cryptocurrencies. We respect, appreciate, and sincerely love the blockchain technology. Our priority is the decentralization of the Coinix software in accordance with the basic principles of blockchain.</p>
+                        <p>User privacy and safety are the main postulates for us, that is why we do not store your private keys, backup files, or any other data on Coinix servers. All your private data is stored only by you. Our wallet is lightweight with a convenient and intuitive interface.</p>
                                         </div>
                 </div>
                 
@@ -38,7 +38,7 @@
                 <div class="col-md-12">
                     <div class="content">
                         <h2 class="title">In Brief</h2>
-                        <p>The first The Wallet for Ethereum (ETH) was launched in 2017. Since then, our team has built a unique ecosystem of blockchain-related products. Guarda squad comprises of highly experienced specialists.</p>
+                        <p>The first The Wallet for Ethereum (ETH) was launched in 2017. Since then, our team has built a unique ecosystem of blockchain-related products. Coinix squad comprises of highly experienced specialists.</p>
                     </div>
                 </div>
                 

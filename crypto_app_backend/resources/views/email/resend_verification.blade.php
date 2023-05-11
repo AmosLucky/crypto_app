@@ -12,7 +12,11 @@
 <body>
 
 <div class="jumbotron text-center">
-Hi <h1>{{$user->username}}</h1>
+<img id="site-logo" src="{{ asset('assets/logo/coinix_white2.png') }}"
+                                alt="Coinix wallet" width="165" height="40"
+                                data-retina="{{ asset('assets/logo/coinix_white2.png') }}" data-width="165"
+                                data-height="40">
+ <h1>Hi {{$user->username}}</h1>
   <!-- <h1>token :{{$randomNumber}}</h1> -->
   
 </div>
@@ -21,7 +25,7 @@ Hi <h1>{{$user->username}}</h1>
   <div class="row">
     <div class="col-sm-12">
       
-      <p>We're happy you sign up for Coinix Wallet . To start exploring the Coinix Wallet App, please confirm your email. </p>
+      <p>To start exploring the Coinix Wallet App, please confirm your email. </p>
       <h3>Email verification code: </h3>
       <h1>{{$randomNumber}}</h1>
       <p>Enter the above code to verify your email</p>

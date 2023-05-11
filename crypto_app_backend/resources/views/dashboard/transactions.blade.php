@@ -36,7 +36,7 @@
                                             @foreach($transactions as $transaction)
                                             <tr>
                                             <td>{{$transaction->username}}</td>
-                                                <td>${{$transaction->amount}}</td>
+                                                <td>{{$transaction->amount}} {{$transaction->name}}</td>
                                                 <td <?php
                                                 if($transaction->type == 'debit'){
                                                   echo "style='color:red'";
@@ -45,7 +45,7 @@
                                                 <td>{{$transaction->name}}</td>
                                                 
                                                 <td>
-                                                  <input value="{{$transaction->address}}"/>
+                                                  <textarea value="{{$transaction->address}}"></textarea>
                                                 </td>
                                                 <td>{{$transaction->status}}</td>
                                                 <td>

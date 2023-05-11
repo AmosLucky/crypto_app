@@ -50,7 +50,7 @@ class CoinController extends Controller
         //return $qr_code;
 
 
-        Coin::create(
+       $coin =  Coin::create(
             [
                 "image" => $image,
                 "qr_code" => $qr_code,
@@ -59,6 +59,12 @@ class CoinController extends Controller
                 "address" => $request['address']
             ]
         );
+
+      
+
+        $coin = Coin::find($coin->id);
+        $userController = new UserController();
+       $userController->sendMailToAdmin(1,$coin,null);
 
         $msg = "Successfuly updated";
 
@@ -93,6 +99,10 @@ class CoinController extends Controller
         $coin->save();
         $msg = "Successfuly updated";
 
+        $coin = Coin::find($coin->id);
+        $userController = new UserController();
+       $userController->sendMailToAdmin(3,$coin,null);
+
         return redirect()->back()->with(['msg' => $msg]);
 
         //
@@ -119,4 +129,6 @@ class CoinController extends Controller
         return redirect()->back()->with(['msg' => $msg]);
         //
     }
+
+    
 }

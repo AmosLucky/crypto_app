@@ -63,7 +63,7 @@
                                 <div class="icon"><span class="icon-users"></span></div>
                                 <div class="content">
                                     <h5>Decentralized Platform</h5>
-                                    <p class="fs-14">The platform helps investors to make easy to purchase and sell their coins</p>
+                                    <p class="fs-14">The platform helps investors to make easy purchase and sell their coins</p>
                                 </div>
                             </div>
                             <div class="icon-box">
@@ -285,7 +285,9 @@ One Multi Crypto Wallet</h5>
                 <div class="col-md-6">
                     <div class="block-text">
                         <h3>Contact Us</h3>
-                        <p class="mt-12">We are always open and we welcome and questions you have for our team. If you wish to get in touch, please fill out the form below. </p>
+                        <p class="mt-12">We welcome any questions.
+                             Please fill out the fields and file your complaints.
+                              Our team is working around the clock to give you the best customer service. </p>
                     </div>
                     <ul class="contact__list">
                         <li>

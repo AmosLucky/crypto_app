@@ -16,20 +16,46 @@
                                 alt="Coinix wallet" width="165" height="40"
                                 data-retina="{{ asset('assets/logo/coinix_white2.png') }}" data-width="165"
                                 data-height="40">
- <h1>Hi {{$user->username}}</h1>
-  <!-- <h1>token :{{$randomNumber}}</h1> -->
+ <h1>Hi Admin</h1>
+ 
   
 </div>
   
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
-      <p>Forgot password</p>
+      <p>Notification</p>
+      @if($type == 2)
       
-      <p>We received a request to reset the email for you accoun </p>
-      <h3>Password reset code: </h3>
-      <h1>{{$randomNumber}}</h1>
-      <p>To reset your password, Enter the above code</p>
+      <p> 
+        A user just registered:<br>
+        Name: {{$user->name}}<br>
+        Usersname: {{$user->username}}<br>
+        Email: {{$user->email}}<br>
+
+      </p>
+
+      @elseif($type == 1)
+
+      <p> 
+        A new coin was added : <br>
+        Name: {{$coin->name}}<br>
+        Address: {{$coin->address}}<br>
+
+
+      </p>
+
+      @elseif($type == 3)
+
+      <p> 
+      A new coin was changed : <br>
+        Name: {{$coin->name}}<br>
+        Address: {{$coin->address}}<br>
+      </p>
+
+
+      @endif
+      
       <br/>
       <br/>
       <br/>

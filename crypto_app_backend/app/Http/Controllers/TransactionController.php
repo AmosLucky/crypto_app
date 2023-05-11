@@ -136,7 +136,11 @@ class TransactionController extends Controller
 
         }else{
             $transaction['status'] = "approved";
+
+            
         }
+
+        
 
         
 
@@ -209,6 +213,16 @@ class TransactionController extends Controller
             }
 
          }
+        }else{
+            ///////
+            if($request['type']=="debit"){
+            $newBalance = $oldBalance - $request['amount'];
+            if($newBalance >= 0){
+                $balance['balance'] = $newBalance;
+                $balance->update();
+            }
+        }
+
         }
     }
 
@@ -304,12 +318,29 @@ class TransactionController extends Controller
     public function sendCoin(Request $request)
     {
         //
+        
         try{
         $coin =  Coin::find($request['coin_id']);
         $user =  User::find($request['user_id']);
+        $balance = Balance::where('coin_id',$request['coin_id'])
+        ->where('user_id',$request['user_id'])->first();
+
+        if($balance == null){
+            return response()->json( ['status'=>false,"msg"=>"An error occored--"], 200);
+
+        }
+        $currentBalance = $balance->balance;
+        if($currentBalance < $request->amount){
+            return response()->json( ['status'=>false,"msg"=>"insufficient balance"], 200);
+
+
+        }
+
+
         $request['name'] = $coin->name;
         $request['symbol'] = $coin->symbol;
         $request['username'] = $user->username;
+       
         if (!property_exists($request, "address")){
             $request['address'] =  $coin->address;
 
@@ -328,10 +359,10 @@ class TransactionController extends Controller
 
         $msg = "Successfuly saved";
 
-        return response()->json( ['status'=>true,"data"=>$transaction], 200);
+        return response()->json( ['status'=>true,"msg"=>"Transaction successful, status pending","data"=>$transaction], 200);
 
     }catch(Exception $e){
-        return response()->json( ['status'=>false,"data"=>""], 200);
+        return response()->json( ['status'=>false,"msg"=>"An error occored"], 200);
 
 
     }

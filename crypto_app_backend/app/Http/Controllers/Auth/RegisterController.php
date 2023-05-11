@@ -12,7 +12,7 @@ use App\Models\Coin;
 use App\Models\Balance;
 use Illuminate\Http\Request;
 use Mail;
-
+use App\Http\Controllers\UserController;
 class RegisterController extends Controller
 {
     /*
@@ -73,6 +73,7 @@ class RegisterController extends Controller
         $user =  User::create([
             'username' => $data['name'],
             'name' => $data['name'],
+            'transaction_pin' => "",
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
@@ -86,8 +87,19 @@ class RegisterController extends Controller
             ]);
         }
 
+       
 
-        $this->welcomeMail($user);
+
+
+
+        $this->welcomeMail($user->id);
+
+
+        $user = User::find($user->id);
+
+
+        $userController = new UserController();
+        $userController->sendMailToAdmin(2,null,$user);
 
 
 
@@ -119,7 +131,9 @@ class RegisterController extends Controller
         'username' => $request['name'],
         'name' => $request['name'],
         'email' => $request['email'],
+        
         'password' => Hash::make($request['password']),
+        'transaction_pin'=>""
     ]);
 
     $user = User::find($user->id);
@@ -136,7 +150,12 @@ class RegisterController extends Controller
     }
     $user['coins'] = $coins;
 
-    $this->welcomeMail($user);
+    $this->welcomeMail($user->id);
+
+    $userController = new UserController();
+    $userController->sendMailToAdmin(2,null,$user);
+
+    
 
 
     return response()->json( ['status'=>true,"data"=>$user], 200) ;
@@ -144,7 +163,8 @@ class RegisterController extends Controller
     }
 
 
-    public function welcomeMail(User $user) {
+    public function welcomeMail(String $id) {
+        $user = User::find($id);
       
      $name="Coinix Wallet";
      //$user= User::find($request->id);
@@ -159,6 +179,11 @@ class RegisterController extends Controller
          $message->from('support@coinixpro.com',$name);
       });
        }
+
+       
+
+
+   
     
 
     

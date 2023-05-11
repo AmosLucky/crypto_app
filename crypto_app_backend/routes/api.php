@@ -37,7 +37,9 @@ Route::post('/forgot_pasword', [App\Http\Controllers\UserController::class, 'For
 Route::post('/reset_password', [App\Http\Controllers\UserController::class, 'resetPassword'])->name('reset_password');
 
 Route::post('/set_transaction_pin', [App\Http\Controllers\UserController::class, 'setTransactionPin'])->name('setTransactionPin');
-Route::post('/change_transaction_pin', [App\Http\Controllers\UserController::class, 'changeTransactionPin'])->name('changeTransactionPin');
+Route::post('/change_transaction_pin', [App\Http\Controllers\UserController::class, 'setTransactionPin'])->name('changeTransactionPin');
+
+
 
 
 

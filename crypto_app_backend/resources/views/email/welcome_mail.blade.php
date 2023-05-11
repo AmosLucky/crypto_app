@@ -10,9 +10,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
+<img id="site-logo" src="{{ asset('assets/logo/coinix_white2.png') }}"
+                                alt="Coinix wallet" width="165" height="40"
+                                data-retina="{{ asset('assets/logo/coinix_white2.png') }}" data-width="165"
+                                data-height="40">
 
 <div class="jumbotron text-center">
-Hi <h1>{{$user->username}}</h1>
+ <h1>Hi {{$user->username}}</h1>
   <!-- <h1>token :{{$randomNumber}}</h1> -->
   
 </div>

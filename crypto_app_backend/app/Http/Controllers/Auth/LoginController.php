@@ -63,7 +63,7 @@ class LoginController extends Controller
             if($user == null){
                 return response()->json([
                     "status" => false,
-                    "message" => "user not found",
+                    "message" => "Email or password not correct",
                     "errors" => $validator->errors(),
                 ], 200);
             }
@@ -71,7 +71,7 @@ class LoginController extends Controller
             if(!Hash::check($request['password'],$user->password)){
                 return response()->json([
                     "status" => false,
-                    "message" => "user not found",
+                    "message" => "Email or password not correct",
                     "errors" => $validator->errors(),
                 ], 200);
 
@@ -102,7 +102,7 @@ class LoginController extends Controller
             }
 
             $user['coins'] = $coins;
-            $user->balance = $totalBalance;
+            //$user->balance = $totalBalance;
 
 
             return response()->json( ['status'=>true,"data"=>$user], 200) ;
