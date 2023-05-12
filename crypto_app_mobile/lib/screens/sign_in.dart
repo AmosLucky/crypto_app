@@ -121,7 +121,7 @@ class _SignInState extends State<SignIn> {
                                               context, ForgetPassword());
                                         },
                                         child: Text(
-                                          "Forgot password",
+                                          "Forgot password?",
                                           style: TextStyle(color: primaryColor),
                                         )),
                                   ]),

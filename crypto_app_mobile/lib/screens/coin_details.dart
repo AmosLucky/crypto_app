@@ -35,7 +35,22 @@ class _CoinDetailsState extends State<CoinDetails> {
       appBar: AppBar(
         elevation: 1,
         backgroundColor: lightIndego,
-        title: BoldText(text: widget.coinModel.name),
+        title: BoldText(
+            text: widget.coinModel.name.startsWith("USDT")
+                ? widget.coinModel.name.substring(0, 5)
+                : widget.coinModel.name),
+        actions: [
+          Container(
+            margin: EdgeInsets.only(right: 10),
+            child: Center(
+              child: Text(widget.coinModel.name.startsWith("USDT") &&
+                      widget.coinModel.name.length > 6
+                  ? widget.coinModel.name
+                      .substring(5, widget.coinModel.name.length)
+                  : widget.coinModel.name),
+            ),
+          ),
+        ],
       ),
       body: Container(
           child: Column(

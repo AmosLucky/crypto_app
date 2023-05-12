@@ -52,6 +52,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
             icon(Icons.person),
           ],
           onTap: (index) {
+            accountManager.reset();
             if (index == 0) {
               // accountManager.refreshUser(accountManager.userModel.id);
             }

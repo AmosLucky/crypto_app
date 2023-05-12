@@ -19,7 +19,7 @@ class CoinModel {
   }
 
   String name;
-  int balance;
+  dynamic balance;
   String symbol;
   String image;
   String qr_code;

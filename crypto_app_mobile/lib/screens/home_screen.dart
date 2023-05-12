@@ -60,18 +60,21 @@ class _HomeScreenState extends State<HomeScreen> {
                         textColor: whiteColor,
                         fontSize: 20,
                       ),
-                      IconButton(
-                          onPressed: () {
-                            // print("gggg");
-                            accountManager.updateCoins();
-                            //generalRepo.setPageIndex(2);
-                            // GeneralRepo()
-                            //     .navigateToScreen(context, ProfileSceen());
-                          },
-                          icon: Icon(
-                            Icons.person_outline,
-                            color: Colors.white,
-                          ))
+                      Visibility(
+                        visible: false,
+                        child: IconButton(
+                            onPressed: () {
+                              // print("gggg");
+                              accountManager.updateCoins();
+                              //generalRepo.setPageIndex(2);
+                              // GeneralRepo()
+                              //     .navigateToScreen(context, ProfileSceen());
+                            },
+                            icon: Icon(
+                              Icons.person_outline,
+                              color: Colors.white,
+                            )),
+                      )
                     ],
                   ),
                 ),

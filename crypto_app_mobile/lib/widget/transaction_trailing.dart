@@ -1,7 +1,6 @@
 import 'package:crypto_app_mobile/models/transaction_model.dart';
 import 'package:flutter/material.dart';
 
-
 class TransactionTailing extends StatelessWidget {
   var type;
   TransactionModel tm;
@@ -20,7 +19,7 @@ class TransactionTailing extends StatelessWidget {
                 Icons.arrow_upward,
                 color: Colors.red,
               ),
-        Text(type),
+        type == "credit" ? Text("Receive") : Text("Send"),
         Text(
           tm.status.toString(),
           style: TextStyle(fontSize: 9),

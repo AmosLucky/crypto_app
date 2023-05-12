@@ -86,6 +86,7 @@ class AccountManager extends ChangeNotifier {
     _isLoding = true;
     _loginMsg = "";
     //bool isSuccessful = false;
+    saveEmail(email);
     notifyListeners();
 
     try {
@@ -139,7 +140,7 @@ class AccountManager extends ChangeNotifier {
     notifyListeners();
 
     try {
-      print(userData);
+      //print(userData);
 
       Response response = await http.post(Uri.parse(createAccountUrl),
           body: jsonEncode(userData),
@@ -209,9 +210,17 @@ class AccountManager extends ChangeNotifier {
         UserModel userModel = UserModel.fromJson(result["data"]);
         currentUser = userModel;
         _userModel = userModel;
+
         notifyListeners();
+        sortCoin();
       }
     }
+  }
+
+  void sortCoin() {
+    userModel.coins.sort((a, b) => b['balance'].compareTo(a['balance']));
+    
+    notifyListeners();
   }
 
   void updateUser({required Map<String, dynamic> userData}) async {
@@ -411,6 +420,7 @@ class AccountManager extends ChangeNotifier {
       //return true;
 
     }
+    sortCoin();
   }
 
   void resendToken() async {
@@ -654,5 +664,10 @@ class AccountManager extends ChangeNotifier {
       return email;
     }
     return "";
+  }
+
+  reset() {
+    _msg = "";
+    _isLoding = false;
   }
 }
