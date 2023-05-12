@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->string('username');
-            $table->float('amount');
+            $table->decimal('amount');
             $table->string('symbol');
             $table->string('type');
             $table->string('status');

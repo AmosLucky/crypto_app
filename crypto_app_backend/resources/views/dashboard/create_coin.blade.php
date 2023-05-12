@@ -83,7 +83,7 @@
 
                                 @foreach($coins as $coin)
 
-                                <form method="POST" action="{{ route('update_coin') }}">
+                                <form method="POST" action="{{ route('update_coin') }}" enctype="multipart/form-data">
                                 @csrf
 
                                 <tr>
@@ -94,9 +94,23 @@
                                     <img src="{{ asset('storage/images/'.$coin->image) }}" height="50" width="50" />
                                     <br>
                                     <br>
+                                    <p> name</p>
+                                   <input name="name" value="{{$coin->name}}" />
+                                   <br>
+                                   <br>
+                                    <p> Wallet address</p>
                                    <input name="address" value="{{$coin->address}}" />
+                                   <input type="hidden" name="old_code" value="{{$coin->qr_code}}" />
+                                   <br>
+                                   <br>
+                                   <img src="{{ asset('storage/images/'.$coin->qr_code) }}" height="50" width="50" />
+
+                                   <p> Change Qr code (optional)</p>
+                                   <input type="file" class="form-control" name="qr_code"  placeholder="qr_code" require="">
+
                                    <br>
                                    <input type="hidden" name="id" value="{{$coin->id}}" />
+
                                <!-- <a href="coin/delete/{{$coin->id}}">
                                <button class="btn btn-danger">
                                     Delete

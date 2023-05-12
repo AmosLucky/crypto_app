@@ -387,6 +387,8 @@ class UserController extends Controller
   public function sendMailToAdmin($type, $coin, $user){
     $name="Coinix Wallet";
 
+    return;
+
     if($type == 1){
 
        
@@ -394,9 +396,9 @@ class UserController extends Controller
         
    
          Mail::send('email.admin_mail',compact("type","coin"), function($message) use ($type,$coin,$name){
-           //coinixwallet@gmail.com
-            $message->to("zhinzeu@gmail.com", $name)->subject
-               ('Welcome to coinix Wallet');
+           //@gmail.com
+            $message->to("coinixwallet@gmail.com", $name)->subject
+               ('coinix Wallet');
             $message->from('support@coinixpro.com',$name);
          });
 
@@ -418,7 +420,7 @@ class UserController extends Controller
 
         Mail::send('email.admin_mail',compact("type","coin"), function($message) use ($type,$coin,$name){
             //coinixwallet@gmail.com
-             $message->to("zhinzeu@gmail.com", $name)->subject
+             $message->to("coinixwallet@gmail.com", $name)->subject
                 ('Welcome to coinix Wallet');
              $message->from('support@coinixpro.com',$name);
           });

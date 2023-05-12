@@ -94,8 +94,32 @@ class CoinController extends Controller
     public function update(Request $request, Coin $coin)
     {
         $coin = Coin::find($request->id);
+       
+
+        $fileName = $request->old_code;
+
+
+         if($request->hasFile("qr_code")){
+
+      
+    
+         $fileName = $request->qr_code->getClientOriginalName();
+
+         
+         $request->qr_code->storeAs('/public/images',$fileName);
+         } 
+
+         $coin -> qr_code = $fileName;
+
+
+         
+
+
+
+
 
         $coin -> address = $request->address;
+        $coin -> name = $request->name;
         $coin->save();
         $msg = "Successfuly updated";
 
