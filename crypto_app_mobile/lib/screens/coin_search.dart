@@ -38,7 +38,7 @@ class _CoinSearchState extends State<CoinSearch> {
       },
       child: Container(
         color: lightIndego,
-        height: getSize(context).height * 0.85,
+        //height: getSize(context).height * 0.85,
         child: Column(children: [
           Container(
             alignment: Alignment.topRight,
@@ -71,6 +71,7 @@ class _CoinSearchState extends State<CoinSearch> {
             ),
           ),
           Container(
+            height: getSize(context).height * 0.7,
             padding: EdgeInsets.symmetric(horizontal: 20),
             child: ListView.builder(
                 itemCount: accountManager.userModel.coins

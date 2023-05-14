@@ -219,7 +219,7 @@ class AccountManager extends ChangeNotifier {
 
   void sortCoin() {
     userModel.coins.sort((a, b) => b['balance'].compareTo(a['balance']));
-    
+
     notifyListeners();
   }
 
