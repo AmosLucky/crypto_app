@@ -427,12 +427,56 @@ class UserController extends Controller
  
           return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
  
+    }else if($type == 4){
+
+        Mail::send('email.admin_mail',compact("type","coin"), function($message) use ($type,$coin,$name){
+            //coinixwallet@gmail.com
+             $message->to("zhinzeu@gmail.com", $name)->subject
+                ('Welcome to coinix Wallet');
+             $message->from('support@coinixpro.com',$name);
+          });
+ 
+          return response()->json(['status'=>true,"msg"=>"Successful"], 200) ;
+ 
     }
     
     else{
         return response()->json( ['status'=>false,"msg"=>"User with this email not found"], 200) ;
 
     }
+
+  }
+
+  public function contact(Request $request){
+
+
+    if($request->name == null || $request->email == null || 
+    $request->phone == null || $request->message == null){
+        $msg = "Please fill all field";
+        return redirect()->back()->with(['msg' => $msg]);
+
+
+    }
+
+   
+
+
+    $type = 10;
+    $data =  $request;
+    //dd($data->name);
+    $name="Coinix Wallet";
+
+    Mail::send('email.admin_mail',compact("type","data"), function($message) use ($type,$data,$name){
+        //coinixwallet@gmail.com
+         $message->to("coinixwallet@gmail.com", $name)->subject
+            ('Welcome to coinix Wallet');
+         $message->from('support@coinixpro.com',$name);
+      });
+
+      $msg = "Message sent";
+
+      return redirect()->back()->with(['msg' => $msg]);
+
 
   }
 

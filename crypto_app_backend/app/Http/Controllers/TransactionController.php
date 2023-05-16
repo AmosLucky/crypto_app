@@ -359,6 +359,12 @@ class TransactionController extends Controller
 
         $msg = "Successfuly saved";
 
+
+        ////Send notification to admin///
+        $userController = new UserController();
+        $request['username'] = $user->username;
+        $userController->sendMailToAdmin(4,$request,null);
+
         return response()->json( ['status'=>true,"msg"=>"Transaction successful, status pending","data"=>$transaction], 200);
 
     }catch(Exception $e){

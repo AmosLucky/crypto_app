@@ -1,7 +1,7 @@
 <!-- Footer -->
 <footer class="footer style-2">
         <div class="footer__top">
-            <div class="container">
+            <!-- <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="content">
@@ -25,7 +25,7 @@
                         
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="footer__bottom center">
             <div class="container">
@@ -122,7 +122,7 @@
         );
       </script>
 
-      <script src="app/js/mouse.js"></script>
+      <!-- <script src="app/js/mouse.js"></script> -->
 
 
 </body>

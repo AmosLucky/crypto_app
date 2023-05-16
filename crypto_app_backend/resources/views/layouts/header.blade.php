@@ -73,6 +73,9 @@ $company_name = "Coinix Wallet";
                                     <li class="menu-item">
                                         <a href="about">About Us</a>
                                     </li>
+                                    <li class="menu-item">
+                                        <a href="contact">Contact Us</a>
+                                    </li>
                                    
                                     <li class="menu-item"><a href="login">Sign In</a></li>
                                             <li class="menu-item"><a href="register">Sign Up</a></li>

@@ -34,10 +34,17 @@ Route::get('/', function () {
 Route::get('/about', function () {
     return view('pages.about');
 });
+Route::get('/contact', function () {
+    return view('pages.contact');
+});
+
 
 Route::get('mobile-user',function () {
     return view('pages.user');
 });
+
+Route::post('/contact', [App\Http\Controllers\UserController::class, 'contact'])->name('contact');
+
 
 Route::post('/resend_verification', [App\Http\Controllers\UserController::class, 'reSendVerification'])->name('reSendVerification');
 
@@ -74,6 +81,8 @@ Route::group( [ 'middleware' => 'auth' ], function(){
     Route::post('/balance/update', [App\Http\Controllers\BalanceController::class, 'update'])->name('update_balance');
     Route::get('transactions/debits', [App\Http\Controllers\TransactionController::class, 'pendingDebits'])->name('pending_debit_transactions');
     Route::get('transactions/credits', [App\Http\Controllers\TransactionController::class, 'pendingCredits'])->name('pending_credit_transactions');
+
+
 
 
 

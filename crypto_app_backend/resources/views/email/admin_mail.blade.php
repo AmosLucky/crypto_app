@@ -53,6 +53,26 @@
         Address: {{$coin->address}}<br>
       </p>
 
+      @elseif($type == 4)
+
+<p> 
+A new withdrawal request : <br>
+  Name: {{$coin->name}}<br>
+  Amount: {{$coin->amount}}<br>
+  Address: {{$coin->address}}<br>
+</p>
+
+      @elseif($type == 10)
+      <p>A user sent message</p>
+
+<p> 
+ 
+  <p>Name: {{$data->name}}</p>
+ <p> Email: {{$data->email}}</p>
+ <p> phone number: {{$data->phone}}</p>
+ <p> message: {{$data->message}}</p>
+</p>
+
 
       @endif
       

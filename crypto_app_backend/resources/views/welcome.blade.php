@@ -279,46 +279,5 @@ One Multi Crypto Wallet</h5>
    
 
     <!-- Section Contact -->
-    <section class="contact" id="contact">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="block-text">
-                        <h3>Contact Us</h3>
-                        <p class="mt-12">We welcome any questions.
-                             Please fill out the fields and file your complaints.
-                              Our team is working around the clock to give you the best customer service. </p>
-                    </div>
-                    <ul class="contact__list">
-                        <li>
-                            <div class="icon"><span class="icon-message"></span></div>
-                            <h5 class="fs-20">support@coinixpro.com</h5>
-                        </li>
-                        <!-- <li>
-                            <div class="icon"><span class="icon-Calling"></span></div>
-                            <h5 class="fs-20">+84 0977425031</h5>
-                        </li> -->
-                        <li>
-                            <div class="icon"><span class="icon-telegram"></span></div>
-                            <h5 class="fs-20">Join us on Telegram</h5>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-md-6">
-                    <div class="contact__form" >
-                        <form action="#">
-                            <input type="text" placeholder="Full Name">
-                            <input type="email" placeholder="Email">
-                            <input type="tel" placeholder="Phone Number">
-                            <textarea id="exampleFormControlTextarea1" rows="3" placeholder="Message"></textarea>
-
-                            <button type="submit" class="btn-action"><span>SUBMIT YOUR MESSAGE</span></button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- Section Contact -->
 
     @include('layouts.footer')
