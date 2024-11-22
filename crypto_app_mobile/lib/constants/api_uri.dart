@@ -1,4 +1,4 @@
-var basedomain = "https://coinixpro.com/api/";
+var basedomain = "https://coinixpro.org/api/";
 
 var loginUrl = basedomain + "login";
 var createAccountUrl = basedomain + "register";
